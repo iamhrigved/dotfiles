@@ -28,6 +28,8 @@ vim.opt.smoothscroll = true
 
 vim.opt.guicursor = "n-c-v-i:block,o:hor40,i:blinkwait150-blinkon150-blinkoff150"
 
+vim.opt_global.dictionary = "/usr/share/dict/words"
+
 vim.opt.wrap = false
 
 vim.opt.swapfile = false

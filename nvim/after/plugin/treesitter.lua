@@ -42,21 +42,40 @@ require("nvim-treesitter.configs").setup({
 				["at"] = "@comment.outer",
 				["it"] = "@comment.inner",
 			},
+			selection_modes = {
+				["@function.outer"] = "V",
+				["@class.outer"] = "V",
+				["@loop.outer"] = "V",
+				["@conditional.outer"] = "V",
+				["@comment.outer"] = "V",
+			},
 		},
 		move = {
 			enable = true,
 			set_jumps = true,
-			goto_next = {
+			goto_next_start = {
 				["[f"] = "@function.outer",
 				["[c"] = "@class.outer",
 				["[l"] = "@loop.outer",
 				["[i"] = "@conditional.outer",
 			},
-			goto_previous = {
+			goto_next_end = {
+				["[F"] = "@function.outer",
+				["[C"] = "@class.outer",
+				["[L"] = "@loop.outer",
+				["[I"] = "@conditional.outer",
+			},
+			goto_previous_start = {
 				["]f"] = "@function.outer",
 				["]c"] = "@class.outer",
 				["]l"] = "@loop.outer",
 				["]i"] = "@conditional.outer",
+			},
+			goto_previous_end = {
+				["]F"] = "@function.outer",
+				["]C"] = "@class.outer",
+				["]L"] = "@loop.outer",
+				["]I"] = "@conditional.outer",
 			},
 		},
 		lsp_interop = {

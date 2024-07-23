@@ -51,11 +51,11 @@ vim.api.nvim_create_autocmd("User", {
 			action = "close",
 			dir = cwd,
 		})
-		-- local t = {}
-		-- for i in string.gmatch(cwd, "([^/]+)") do
-		-- 	table.insert(t, i)
-		-- end
-		-- vim.cmd("silent! bd! " .. t[#t]) -- weird buffer with name of the parent folder was getting created
+		local t = {}
+		for i in string.gmatch(cwd, "([^/]+)") do
+			table.insert(t, i)
+		end
+		vim.cmd("silent! bd! " .. t[#t]) -- weird buffer with name of the parent folder was getting created
 		-- so had to find a way to delete it
 	end,
 })

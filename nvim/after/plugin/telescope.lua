@@ -17,6 +17,7 @@ end
 
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>lg", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>fz", builtin.current_buffer_fuzzy_find, {})
 vim.keymap.set("n", "<leader>gs", builtin.grep_string, {})
 vim.keymap.set("v", "gs", function()
 	return builtin.grep_string({ default_text = getVisualSelection() })
@@ -33,9 +34,31 @@ end, {})
 
 require("telescope").setup({
 	defaults = {
+		layout_strategy = "horizontal",
+		sorting_strategy = "ascending",
 		mappings = {
-			i = { ["<c-t>"] = trouble.open },
+			i = {
+				["<c-t>"] = trouble.open,
+				["<c-j>"] = require("telescope.actions").move_selection_next,
+				["<c-k>"] = require("telescope.actions").move_selection_previous,
+			},
 			n = { ["<c-t>"] = trouble.open },
+		},
+		layout_config = {
+			prompt_position = "top",
+			width = 0.85,
+		},
+	},
+	pickers = {
+		sorting_strategy = "ascending",
+		current_buffer_fuzzy_find = {
+			sorting_strategy = "ascending",
+			theme = "dropdown",
+			previewer = false,
+			layout_config = {
+				width = 0.6,
+				height = 0.5,
+			},
 		},
 	},
 	extensions = {
@@ -78,10 +101,17 @@ require("telescope").setup({
 				["<C-t>"] = {},
 			},
 		},
+		fzf = {
+			fuzzy = true, -- false will only do exact matching
+			override_generic_sorter = true, -- override the generic sorter
+			override_file_sorter = true, -- override the file sorter
+			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+		},
 	},
 })
 require("telescope").load_extension("ui-select")
 require("telescope").load_extension("persisted")
 require("telescope").load_extension("zoxide")
+require("telescope").load_extension("fzf")
 
 vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list)

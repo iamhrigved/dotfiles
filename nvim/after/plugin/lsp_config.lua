@@ -2,8 +2,8 @@ local DiagnosticSigns = vim.g.DiagnosticSigns
 DiagnosticSigns["priority"] = 10 -- NEVER CHANGE see gitsigns.lua
 
 vim.keymap.set("n", "er", "<cmd>lua vim.diagnostic.open_float()<cr>") -- 'er' for popup and dg for telescope
-vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
+vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 
 -- default lsp config
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
 		vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
 		-- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts) in telescope.lua
-		vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+		vim.keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
 		-- vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts) in telescope.lua
 		vim.keymap.set("n", "gh", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
 		vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
@@ -145,7 +145,19 @@ vim.g.rustaceanvim = {
 		on_attatch = default_on_attach,
 		default_settings = {
 			["rust-analyzer"] = {
-				cargo = { allFeatures = true },
+				imports = {
+					granularity = {
+						group = "module",
+					},
+					prefix = "self",
+				},
+				cachePriming = { enable = true },
+				cargo = {
+					allFeatures = true,
+				},
+				diagnostics = {
+					experimental = { enable = true },
+				},
 				checkOnSave = true,
 			},
 		},

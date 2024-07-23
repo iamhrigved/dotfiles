@@ -18,10 +18,10 @@ require("mini.indentscope").setup({
 		try_as_border = true,
 	},
 
-	symbol = "⎪",
+	symbol = "┃",
 })
-vim.cmd("hi! link MiniIndentscopeSymbol TSRainbowCyan")
-vim.cmd("hi! link MiniIndentscopeSymbolOff DiagnosticError")
+vim.cmd("hi! MiniIndentscopeSymbol guifg=#346a73")
+vim.cmd("hi! MiniIndentscopeSymbolOff guifg=#823c45")
 vim.cmd("hi! IndentBlanklineCustom guifg=#393E45")
 require("ibl").setup({
 	indent = {

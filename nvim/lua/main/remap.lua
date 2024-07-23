@@ -31,6 +31,7 @@ noremap("v", "J", ":m '>+1<CR>gv=gv")
 -- preserve the text pasted in visual mode
 noremap("v", "p", '"_dp') -- delete into the null register and paste
 noremap("v", "D", '"_d') -- just delete into the null register
+noremap("n", "dd", "_dd")
 noremap({ "v", "n" }, "<C-c>", '"+y')
 -- to paste, just do C-S-v
 
@@ -86,10 +87,10 @@ function _G.set_terminal_keymaps()
 	vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], termopts)
 	vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], termopts)
 	vim.keymap.set("t", "<c-w>", [[<c-\><c-n><c-w>]], termopts)
-	vim.keymap.set("t", "<M-up>", "<C-w>+", termopts)
-	vim.keymap.set("t", "<M-down>", "<C-w>-", termopts)
-	vim.keymap.set("t", "<M-,>", "<C-w>5<", termopts)
-	vim.keymap.set("t", "<M-.>", "<C-w>5>", termopts)
+	vim.keymap.set("t", "<C-up>", "<C-w>+", termopts)
+	vim.keymap.set("t", "<C-down>", "<C-w>-", termopts)
+	vim.keymap.set("t", "<C-left>", "<C-w>5<", termopts)
+	vim.keymap.set("t", "<C-right>", "<C-w>5>", termopts)
 end
 
 noremap("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>")
@@ -97,3 +98,15 @@ noremap("n", "<leader>tf", "<cmd>ToggleTerm direction=float name=.Terminal<CR
 
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+-- save and delete all unloaded buffers
+-- local bufs = vim.api.nvim_list_bufs()
+-- for _, buf in ipairs(bufs) do
+-- 	local modifiable = vim.api.nvim_buf_get_option(buf, "modifiable")
+-- 	if modifiable then
+-- 		vim.cmd("silent w")
+-- 	end
+-- 	if not vim.api.nvim_buf_is_loaded(buf) then
+-- 		vim.api.nvim_buf_delete(buf, { force = true })
+-- 	end
+-- end

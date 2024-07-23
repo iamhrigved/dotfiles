@@ -12,7 +12,7 @@ end
 
 animate.setup({
 	cursor = {
-		enable = false,
+		enable = true,
 		timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
 	},
 

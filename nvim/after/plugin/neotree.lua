@@ -4,7 +4,7 @@ require("neo-tree").setup({
 	close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
 	popup_border_style = "rounded",
 	enable_git_status = true,
-	enable_diagnostics = true,
+	enable_diagnostics = false,
 	enable_normal_mode_for_inputs = true, -- Enable normal mode for input dialogs.
 	open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
 	sort_case_insensitive = false, -- used when sorting files and directories in the tree
@@ -47,9 +47,9 @@ require("neo-tree").setup({
 			indent_size = 2,
 			padding = 1, -- extra padding on left hand side
 			-- indent guides
-			with_markers = true,
-			indent_marker = "│",
-			last_indent_marker = "└",
+			with_markers = false,
+			indent_marker = "│", --│
+			last_indent_marker = "└", --└
 			highlight = "NeoTreeIndentMarker",
 			-- expander config, needed for nesting files
 			with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
@@ -139,7 +139,7 @@ require("neo-tree").setup({
 			-- ["t"] = "open_tab_drop",
 			["w"] = "open_with_window_picker",
 			--["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
-			["z"] = "close_node",
+			["h"] = "close_node",
 			-- ['C'] = 'close_all_subnodes',
 			["Z"] = "close_all_nodes",
 			--["Z"] = "expand_all_nodes",
@@ -176,7 +176,7 @@ require("neo-tree").setup({
 	nesting_rules = {},
 	filesystem = {
 		filtered_items = {
-			visible = false, -- when true, they will just be displayed differently than normal items
+			visible = true, -- when true, they will just be displayed differently than normal items
 			hide_dotfiles = false,
 			hide_gitignored = false,
 			hide_hidden = false, -- only works on Windows for hidden files/directories
@@ -224,7 +224,7 @@ require("neo-tree").setup({
 				["<c-x>"] = "clear_filter",
 				["[g"] = "prev_git_modified",
 				["]g"] = "next_git_modified",
-				["h"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
+				["[h"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
 				["oc"] = { "order_by_created", nowait = false },
 				["od"] = { "order_by_diagnostics", nowait = false },
 				["og"] = { "order_by_git_status", nowait = false },

@@ -17,6 +17,16 @@ function CmpBefore(entry, vim_item)
 			vim_item.menu = string.sub(vim_item.menu, 1, 12) .. "..."
 		end
 	end
+	if entry.source.name == "buffer" then
+		vim_item.kind = "󰈬 Buffer"
+	end
+
+	-- for k, v in pairs(vim_item) do
+	-- 	print(k .. ": ", v)
+	-- end
+	-- print(vim_item.kind)
+	--
+	-- print(entry.source.name)
 	return vim_item
 end
 
@@ -60,6 +70,10 @@ cmp.setup({
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "buffer" },
+		{
+			name = "dictionary",
+			keyword_length = 2,
+		},
 		{ name = "emoji" },
 	},
 
@@ -67,8 +81,8 @@ cmp.setup({
 		documentation = {
 			scrollbar = "|",
 			max_height = 15,
-			max_width = 0.8 * vim.api.nvim_win_get_width(0),
-			winhighlight = "Normal:CmpPmenu,Search:None,CursorLine:Pmenu,CmpBorder:DiagnosticSignInfo", -- border will be the same as border of Noice cmdline_popup
+			max_width = math.floor(0.8 * vim.api.nvim_win_get_width(0)),
+			winhighlight = "Normal:CmpPmenu,Search:None,CursorLine:Pmenu,CmpBorder:FlaotBorder", -- border will be the same as border of Noice cmdline_popup
 			border = "rounded",
 		},
 
@@ -76,7 +90,7 @@ cmp.setup({
 			col_offset = 0,
 			side_padding = 1,
 			scrollbar = "|",
-			winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:None,CmpBorder:DiagnosticSignInfo", -- border will be the same as border of Noice cmdline_popup
+			winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:None,CmpBorder:FloatBorder", -- border will be the same as border of Noice cmdline_popup
 			border = "rounded",
 		},
 	},
@@ -158,6 +172,18 @@ cmp.setup.cmdline(":", {
 		completion = {
 			scrollbar = "|",
 		},
+	},
+})
+
+-- for dictionary
+require("cmp_dictionary").setup({
+	paths = { "/usr/share/dict/words" },
+	exact_length = 2,
+	first_case_insensitive = true,
+	max_number_items = 5,
+	document = {
+		enable = true,
+		command = { "wn", "${label}", "-over" },
 	},
 })
 

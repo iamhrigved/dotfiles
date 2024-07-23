@@ -18,11 +18,11 @@ local plugins = {
 	-- [[ Essentials: ]] --
 	{
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.6",
-		-- or                            , branch = '0.1.x',
+		branch = "0.1.x",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
 			{ "jvgrootveld/telescope-zoxide" },
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 	},
 	{
@@ -59,6 +59,12 @@ local plugins = {
 			"nvim-tree/nvim-web-devicons",
 			"nvim-lua/plenary.nvim",
 		},
+	},
+	{
+		"akinsho/toggleterm.nvim",
+		cmd = "ToggleTerm",
+		version = "*",
+		config = true,
 	},
 	{
 		"christoomey/vim-tmux-navigator",
@@ -128,6 +134,15 @@ local plugins = {
 		"neovim/nvim-lspconfig",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig",
+		{
+			"zeioth/garbage-day.nvim",
+			event = "VeryLazy",
+			opts = {
+				aggressive_mode = true,
+				grace_period = 60, --seconds
+				wakeup_delay = 5000, -- milliseconds
+			},
+		},
 	},
 
 	-- Autocompletion
@@ -136,18 +151,18 @@ local plugins = {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-cmdline", -- for cmd auto complete
 		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-nvim-lsp-document-symbol",
 		"hrsh7th/cmp-emoji",
+		"uga-rosa/cmp-dictionary",
 		"L3MON4D3/LuaSnip",
 		"onsails/lspkind.nvim", -- for vscode like symbols for auto complete menu
 	},
 
 	-- Debugging
 	{
-		"mfussenegger/nvim-dap",
-		"rcarriga/nvim-dap-ui",
-		"nvim-neotest/nvim-nio",
-		"theHamsta/nvim-dap-virtual-text",
+		-- "mfussenegger/nvim-dap",
+		-- "rcarriga/nvim-dap-ui",
+		-- "nvim-neotest/nvim-nio",
+		-- "theHamsta/nvim-dap-virtual-text",
 	},
 
 	-- Rust
@@ -160,12 +175,24 @@ local plugins = {
 	--  [[ Themes: ]]      --
 
 	{ "navarasu/onedark.nvim", event = "VimEnter" },
+	-- { "akinsho/horizon.nvim", version = "*" },
+	-- { "diegoulloao/neofusion.nvim", priority = 1000, config = true },
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		priority = 1000,
+	},
+	{
+		"NvChad/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
 
 	-- [[ General Purpose: ]] --
 
 	{
 		"kylechui/nvim-surround",
-		event = "InsertEnter",
 		version = "main",
 		config = function()
 			require("nvim-surround").setup()
@@ -210,13 +237,11 @@ local plugins = {
 		opts = {},
 	},
 
-	{ "echasnovski/mini.ai", version = false },
-	{ "mistricky/codesnap.nvim", build = "make" },
 	"Wansmer/treesj",
 	"folke/flash.nvim",
-	"folke/zen-mode.nvim",
 	"nvim-telescope/telescope-ui-select.nvim",
 	"olimorris/persisted.nvim",
+	"mistricky/codesnap.nvim",
 	"stevearc/dressing.nvim",
 	"tpope/vim-commentary",
 	"RRethy/vim-illuminate",

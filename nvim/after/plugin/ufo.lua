@@ -5,21 +5,36 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = false
 
 local builtin = require("statuscol.builtin")
-require("statuscol").setup({
-	relculright = true,
-	ft_ignore = { "neo-tree" },
+local folddisable_config = {
+	relculright = false,
+	ft_ignore = { "neo-tree", "toggleterm" },
 	segments = {
-		{ text = { builtin.foldfunc, "  " }, click = "v:lua.ScFa" },
 		{
 			text = { "%s" },
 			click = "v:lua.ScSa",
 		},
+		-- { text = { builtin.foldfunc, "" }, click = "v:lua.ScFa" },
 		{
-			text = { builtin.lnumfunc, " " },
+			text = { " ", builtin.lnumfunc, " " },
 			click = "v:lua.ScLa",
 		},
 	},
-})
+}
+local foldenable_config = {
+	relculright = false,
+	ft_ignore = { "neo-tree", "toggleterm" },
+	segments = {
+		{
+			text = { "%s" },
+			click = "v:lua.ScSa",
+		},
+		{ text = { builtin.foldfunc, "" }, click = "v:lua.ScFa" },
+		{
+			text = { " ", builtin.lnumfunc, " " },
+			click = "v:lua.ScLa",
+		},
+	},
+}
 
 require("foldsigns").setup({
 	include = nil,
@@ -84,9 +99,10 @@ vim.keymap.set("n", "zp", require("ufo").peekFoldedLinesUnderCursor)
 vim.keymap.set("n", "zi", function()
 	if vim.o.foldenable then
 		vim.o.foldenable = false
+		require("statuscol").setup(folddisable_config)
 	else
 		vim.o.foldenable = true
 		vim.cmd("UfoAttach")
-		vim.cmd("")
+		require("statuscol").setup(foldenable_config)
 	end
 end)

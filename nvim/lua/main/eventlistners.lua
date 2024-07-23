@@ -4,7 +4,7 @@ end
 
 -- Formatting on file save
 autocmd("BufWritePre", {
-	desc = "Formatting on file save",
+	desc = "Formatting on file save, and saving the current session",
 	pattern = "*",
 	callback = function(args)
 		require("conform").format({ bufnr = args.buf })
@@ -39,7 +39,7 @@ autocmd("BufUnload", {
 	-- pattern = 'AlphaClosed',
 	desc = "Enable statusline after startup screen",
 	callback = function()
-		vim.go.laststatus = 2
+		vim.go.laststatus = 3 -- 2 for multiple status, 3 for global status
 	end,
 })
 
@@ -49,8 +49,15 @@ autocmd("BufEnter", {
 		vim.schedule(function()
 			if vim.o.filetype == "toggleterm" then
 				vim.cmd("file Terminal | startinsert")
+				vim.o.foldcolumn = "0" --important
+				vim.cmd("WindowsDisableAutowidth") --important
 			end
 		end)
+	end,
+})
+autocmd("BufLeave", {
+	callback = function()
+		vim.cmd("WindowsEnableAutowidth") --important
 	end,
 })
 
@@ -76,14 +83,6 @@ autocmd("BufLeave", {
 	end,
 })
 
--- vim.api.nvim_create_autocmd('FileType', {
--- 	desc = "Opening help window in vertical split instead of horizontal",
--- 	pattern = ".*help",
--- 	callback = function()
--- 		vim.cmd("wimcmd L")
--- 	end
--- })
-
 local get_icon_hl = function()
 	local filename = vim.fn.expand("%:t")
 	local _, color = require("nvim-web-devicons").get_icon_color(filename)
@@ -101,16 +100,16 @@ autocmd("BufEnter", {
 	end,
 })
 
-autocmd("InsertLeave", {
-	callback = function()
-		vim.schedule(function()
-			if vim.bo.filetype ~= "rust" then
-				return
-			end
-			vim.cmd("silent! w")
-		end)
-	end,
-})
+-- autocmd("InsertLeave", {
+-- 	callback = function()
+-- 		vim.schedule(function()
+-- 			if vim.bo.filetype ~= "rust" then
+-- 				return
+-- 			end
+-- 			vim.cmd("silent! w")
+-- 		end)
+-- 	end,
+-- })
 
 autocmd("FocusLost", {
 	callback = function()

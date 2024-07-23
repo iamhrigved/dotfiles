@@ -28,6 +28,7 @@ local c = {
 }
 
 require("barbecue").setup({
+	exclude_filetypes = { "toggleterm" },
 	theme = {
 		normal = {
 			bg = c.none,
