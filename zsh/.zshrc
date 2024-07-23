@@ -2,28 +2,39 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export TERM='xterm-256color'
 export KEYTIMEOUT=50
+export BROWSER=wslview
+export HOMEBREW_AUTO_UPDATE_SECS=172800
+
+if [[ ! $(echo $TMUX) == "" ]]; then # if inside tmux
+	export TERM='tmux-256color'
+fi
 
 # brew :
 export BREW_HOME="/home/linuxbrew/.linuxbrew/bin"
 export PATH="$PATH:$BREW_HOME"
 
+# bat & delta :
 export BAT_THEME=base16
 export PAGER=delta
+export MANPAGER=delta
 export BATDIFF_USE_DELTA=false
 
-export VI_MODE_SET_CURSOR=true
-
 # oh-my-posh :
-export PROMPT_CONFIG=$(brew --prefix oh-my-posh)/main_config.json
+export PROMPT_CONFIG=~/.config/oh-my-posh/omp.conf.json
 
-eval "$(oh-my-posh init zsh)"
 eval "$(oh-my-posh init zsh --config $PROMPT_CONFIG)"
 
 # CUSTOM ALIASES :
 
-alias ls="echo "" && eza --all --git --color=always --icons=always"
+alias lsl="echo "" && eza --all --git --color=always --icons=always --long"
+ls() {
+	local col_num=$(tput cols)
+	local width=$[ 8 * $col_num / 10 ]
+	echo "" && eza --all --width=$width --color=always --icons=always $@
+}
 
 alias vi="nvim"
+alias ex="explorer.exe"
 alias c="clear"
 alias vish="nvim ~/.zshrc"
 alias vipc="nvim $PROMPT_CONFIG"
@@ -41,19 +52,71 @@ tmks() {
 
 tmas() {
 	search_result="$(tmux ls | grep ".*$1.*: " -ioG | sed 's/: //')"
-	echo $search_result
 	echo "Found Session: $search_result" && sleep 1
 	echo "Loading $search_result..." && sleep 1
 	tmux attach-session -t "$search_result"
-	echo $search_result
 }
 
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 alias bd="batdiff --context=4"
 alias bds="batdiff --staged --context=4"
+alias fzf="fzf --preview \"$show_file_or_dir_preview\""
 alias lg="lazygit"
 
-# HISTORY OPTIONS :
+runc() {
+	local file_location=$1
+	local file_name=${1:t}
+	local file_directory=${1:h}
+	local exe_file_name=${file_name:r}
+	local is_local=""
+	local exe_file_location=""
+
+	if [[ $file_directory == "." ]]; then 
+		is_local=true
+	else
+		is_local=false
+	fi
+
+	if [[ $(ls $file_directory/ | grep -i -o "executables") == "" ]]; then
+		mkdir $file_directory/executables
+		echo "New directory created $file_directory/executables"
+	fi
+
+	exe_file_location="$file_directory/executables/$exe_file_name"
+
+	echo ""
+	gcc $file_location -o $exe_file_location && $exe_file_location ${@:2}
+	echo ""
+}
+runcpp() {
+	local file_location=$1
+	local file_name=${1:t}
+	local file_directory=${1:h}
+	local exe_file_name=${file_name:r}
+	local is_local=""
+	local exe_file_location=""
+
+	if [[ $file_directory == "." ]]; then 
+		is_local=true
+	else
+		is_local=false
+	fi
+
+	if [[ $(ls $file_directory/ | grep -i -o "executables") == "" ]]; then
+		mkdir $file_directory/executables
+		echo "New directory created $file_directory/executables"
+	fi
+
+	exe_file_location="$file_directory/executables/$exe_file_name"
+
+	echo ""
+	g++ $file_location -o $exe_file_location && $exe_file_location ${@:2}
+	echo ""
+}
+
+
+# history config options
 
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -67,18 +130,6 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-PREV_ZSH_CMD() {
-	local prevcmd=$(tail -n 1 ~/.zsh_history | sed 's/.*;//')
-
-	if ((${#prevcmd} > 20)); then
-		local prevcmd_short="${prevcmd[1,20]}..."
-	else 
-		local prevcmd_short=$prevcmd
-	fi
-
-	echo $prevcmd_short
-}
-
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu no
@@ -86,7 +137,6 @@ zstyle ':completion:*' menu no
 # zoxide :
 eval "$(zoxide init zsh --cmd cd)"
 
-show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
@@ -95,15 +145,15 @@ export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 # - The first argument to the function is the name of the command.
 # - You should make sure to pass the rest of the arguments to fzf.
 _fzf_comprun() {
-  local command=$1
-  shift
+	local command=$1
+	shift
 
-  case "$command" in
-    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
-    export|unset) fzf --preview "eval 'echo ${}'"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
-    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
-  esac
+	case "$command" in
+		cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+		export|unset) fzf --preview "eval 'echo ${}'"         "$@" ;;
+		ssh)          fzf --preview 'dig {}'                   "$@" ;;
+		*)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+	esac
 }
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -141,12 +191,15 @@ zinit light Aloxaf/fzf-tab
 
 autoload -U compinit && compinit
 
-# KEYBINDINGS OPTIONS :
-#
-bindkey '^j' history-search-forward
-bindkey '^k' history-search-backward
+# vi-mode config options
+bindkey '^n' history-search-forward
+bindkey '^p' history-search-backward
+bindkey '^y' autosuggest-accept
 
 bindkey -M viins 'kj' vi-cmd-mode
+
+export VI_MODE_SET_CURSOR=true
+export VI_MODE_CURSOR_INSERT=1
 
 # fzf config options
 source <(fzf --zsh)
