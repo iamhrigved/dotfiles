@@ -1,0 +1,19 @@
+[http]
+	postBuffer = 157286400
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+	email = iamhrigved@gmail.com
+	name = Hrigved
+[browser]
+	chromium = brave
+[alias]
+	lga = log --graph --abbrev-commit --all --color=always --pretty=format:'%C(red)%h%C(reset)%C(auto)%d%C(reset) - %s %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset) %n'
+	lg = log --graph --abbrev-commit --color=always --pretty=format:'%C(red)%h%C(reset)%C(auto)%d%C(reset) - %s %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset) %n'
+
+[init]
+	defaultBranch = main
