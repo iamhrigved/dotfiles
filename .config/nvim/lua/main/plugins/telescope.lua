@@ -18,12 +18,19 @@ return {
 			end
 		end
 
-		vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-		vim.keymap.set("n", "<leader>lg", builtin.live_grep, {})
+		-- symlink support
+		vim.keymap.set("n", "<leader>ff", function()
+			return builtin.find_files({ follow = true })
+		end, {})
+		vim.keymap.set("n", "<leader>lg", function()
+			return builtin.live_grep({ additional_args = { "-L" } })
+		end, {})
 		vim.keymap.set("n", "<leader>fz", builtin.current_buffer_fuzzy_find, {})
-		vim.keymap.set("n", "<leader>gs", builtin.grep_string, {})
+		vim.keymap.set("n", "<leader>gs", function()
+			return builtin.grep_string({ additional_args = { "-L" } })
+		end, {})
 		vim.keymap.set("v", "gs", function()
-			return builtin.grep_string({ default_text = getVisualSelection() })
+			return builtin.grep_string({ additional_args = { "-L" }, default_text = getVisualSelection() })
 		end, {})
 		vim.keymap.set("n", "<leader>of", builtin.oldfiles, {})
 		vim.keymap.set("n", "<leader>fc", builtin.commands, {})

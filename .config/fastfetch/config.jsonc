@@ -1,0 +1,110 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "display": {
+    "separator": " ->    ",
+    "size": {
+      "binaryPrefix": "jedec",
+    },
+  },
+  "modules": [
+    {
+      "type": "title",
+      "color": { "user": "blue" },
+      "format": "{user-name-colored} {at-symbol-colored} {host-name-colored}",
+    },
+    {
+      "type": "separator",
+      "string": "─",
+      "length": 17,
+    },
+    {
+      "key": "  OS           ",
+      "keyColor": "red",
+      "type": "os",
+    },
+    {
+      "key": "  Kernel       ",
+      "keyColor": "blue",
+      "type": "kernel",
+    },
+    {
+      "key": "󰥔  Uptime       ",
+      "keyColor": "green",
+      "type": "uptime",
+    },
+    {
+      "key": "  WM           ",
+      "keyColor": "magenta",
+      "type": "wm",
+    },
+    {
+      "key": "󰍹  DE           ",
+      "keyColor": "cyan",
+      "type": "de",
+    },
+    {
+      "key": "  Shell        ",
+      "keyColor": "yellow",
+      "type": "shell",
+    },
+    {
+      "key": "  Terminal     ",
+      "keyColor": "red",
+      "type": "terminal",
+    },
+    {
+      "type": "terminalfont",
+      "key": "  Font         ",
+      "keyColor": "blue",
+    },
+    {
+      "key": "  CPU          ",
+      "keyColor": "green",
+      "type": "cpu",
+    },
+    {
+      "key": "󰢮  GPU          ",
+      "keyColor": "magenta",
+      "type": "gpu",
+    },
+    {
+      "key": "  Memory       ",
+      "keyColor": "cyan",
+      "type": "memory",
+    },
+    {
+      "key": "󰩟  Local IP     ",
+      "keyColor": "yellow",
+      "type": "localip",
+      "compact": true,
+    },
+    {
+      "type": "packages",
+      "key": "  Packages     ",
+      "keyColor": "red",
+    },
+    {
+      "type": "command",
+      "keyColor": "blue",
+      "text": "$EDITOR --version | head -1",
+      "key": "  Editor       ",
+    },
+    {
+      "type": "swap",
+      "key": "  Swap         ",
+      "keyColor": "green",
+    },
+    {
+      "type": "disk",
+      "key": "  Disk (/)     ",
+      "folders": "/",
+      "keyColor": "magenta",
+    },
+    {
+      "type": "disk",
+      "key": "  Disk (/home) ",
+      "folders": "/home",
+      "keyColor": "cyan",
+    },
+  ],
+}
