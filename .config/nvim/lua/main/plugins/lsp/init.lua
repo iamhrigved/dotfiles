@@ -32,7 +32,7 @@ vim.filetype.add({
 	pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 })
 -- Hyprland LSP support
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+vim.api.nvim_create_autocmd("BufAdd", {
 	pattern = { "*.hl", "hypr*.conf" },
 	callback = function(event)
 		vim.lsp.start({

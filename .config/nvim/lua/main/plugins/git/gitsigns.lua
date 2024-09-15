@@ -46,10 +46,6 @@ return {
 			},
 		})
 
-		-- colors formed by mixing default colors with bg colors
-		vim.cmd("hi GitSignsAdd guifg=#57704a")
-		vim.cmd("hi GitSignsChange guifg=#37658b")
-
 		vim.keymap.set("n", "[h", "<cmd>Gitsigns next_hunk<CR>")
 		vim.keymap.set("n", "]h", "<cmd>Gitsigns prev_hunk<CR>")
 	end,

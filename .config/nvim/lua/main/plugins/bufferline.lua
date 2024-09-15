@@ -3,7 +3,7 @@ return {
 	config = function()
 		local DiagnosticSigns = vim.g.DiagnosticSigns
 
-		local bufferline_setup = {
+		require("bufferline").setup({
 			options = {
 				mode = "buffers", -- set to "tabs" to only show tabpages instead
 				themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
@@ -71,14 +71,14 @@ return {
 
 						if errorc ~= 0 then
 							table.insert(result, {
-								text = DiagnosticSigns["Error"] .. " " .. errorc .. "  ",
+								text = DiagnosticSigns["ERROR"] .. errorc .. "  ",
 								link = "DiagnosticSignError",
 							})
 						end
 
 						if warningc ~= 0 then
 							table.insert(result, {
-								text = DiagnosticSigns["Warn"] .. " " .. warningc .. "  ",
+								text = DiagnosticSigns["WARN"] .. warningc .. "  ",
 								link = "DiagnosticSignWarn",
 							})
 						end
@@ -86,14 +86,14 @@ return {
 						if hintc ~= 0 then
 							table.insert(
 								result,
-								{ text = DiagnosticSigns["Hint"] .. " " .. hintc .. "  ", link = "DiagnosticSignHint" }
+								{ text = DiagnosticSigns["HINT"] .. hintc .. "  ", link = "DiagnosticSignHint" }
 							)
 						end
 
 						if infoc ~= 0 then
 							table.insert(
 								result,
-								{ text = DiagnosticSigns["Info"] .. " " .. infoc .. "  ", link = "DiagnosticSignInfo" }
+								{ text = DiagnosticSigns["INFO"] .. infoc .. "  ", link = "DiagnosticSignInfo" }
 							)
 						end
 						table.insert(result, { text = "   " })
@@ -101,15 +101,11 @@ return {
 					end,
 				},
 			},
-		}
-		require("bufferline").setup(bufferline_setup)
-		vim.cmd("hi! link BufferLineModifiedSelected NeoTreeGitModified")
+		})
 
 		vim.keymap.set("n", "<leader>bl", "<cmd>Neotree close<CR> <cmd>BufferLinePick<CR>", { noremap = true })
 		vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", { noremap = true })
 		vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", { noremap = true })
-
-		return bufferline_setup -- see eventlistners.lua
 	end,
 }
 

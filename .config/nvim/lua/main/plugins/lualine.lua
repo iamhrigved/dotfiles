@@ -90,7 +90,7 @@ return {
 				lualine_c = {
 					{
 						"branch",
-						icon = "  ",
+						icon = "", -- 
 						color = "DefaultCyan",
 					},
 					{

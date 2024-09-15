@@ -77,6 +77,5 @@ return {
 				end,
 			})
 		end)
-		vim.cmd("hi! FlashLabel guibg=#e55561 guifg=#1f2329")
 	end,
 }

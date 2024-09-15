@@ -24,52 +24,58 @@
     },
     {
       "key": "  Kernel       ",
-      "keyColor": "blue",
+      "keyColor": "green",
       "type": "kernel",
     },
     {
       "key": "󰥔  Uptime       ",
-      "keyColor": "green",
+      "keyColor": "yellow",
       "type": "uptime",
     },
     {
       "key": "  WM           ",
-      "keyColor": "magenta",
+      "keyColor": "blue",
       "type": "wm",
     },
-    {
-      "key": "󰍹  DE           ",
-      "keyColor": "cyan",
-      "type": "de",
-    },
+    //{
+    //  "key": "󰍹  DE           ",
+    //  "keyColor": "magenta",
+    //  "type": "de",
+    //},
     {
       "key": "  Shell        ",
-      "keyColor": "yellow",
+      "keyColor": "magenta", // cyan
       "type": "shell",
     },
     {
       "key": "  Terminal     ",
-      "keyColor": "red",
+      "keyColor": "cyan", // red
       "type": "terminal",
     },
+    //{
+    //  "type": "terminalfont",
+    //  "key": "  Font         ",
+    //  "keyColor": "green",
+    //},
+    //{
+    //  "key": "  CPU          ",
+    //  "keyColor": "yellow",
+    //  "type": "cpu",
+    //},
+    //{
+    //  "key": "󰢮  GPU          ",
+    //  "keyColor": "blue",
+    //  "type": "gpu",
+    //},
     {
-      "type": "terminalfont",
-      "key": "  Font         ",
-      "keyColor": "blue",
-    },
-    {
-      "key": "  CPU          ",
-      "keyColor": "green",
-      "type": "cpu",
-    },
-    {
-      "key": "󰢮  GPU          ",
-      "keyColor": "magenta",
-      "type": "gpu",
+      "type": "command",
+      "keyColor": "red", // cyan
+      "text": "$EDITOR --version | head -1",
+      "key": "  Editor       ",
     },
     {
       "key": "  Memory       ",
-      "keyColor": "cyan",
+      "keyColor": "green", // magenta
       "type": "memory",
     },
     {
@@ -78,33 +84,36 @@
       "type": "localip",
       "compact": true,
     },
-    {
-      "type": "packages",
-      "key": "  Packages     ",
-      "keyColor": "red",
-    },
-    {
-      "type": "command",
-      "keyColor": "blue",
-      "text": "$EDITOR --version | head -1",
-      "key": "  Editor       ",
-    },
+    //{
+    //  "type": "packages",
+    //  "key": "  Packages     ",
+    //  "keyColor": "blue",
+    //},
     {
       "type": "swap",
       "key": "  Swap         ",
-      "keyColor": "green",
+      "keyColor": "blue", // magenta
     },
     {
       "type": "disk",
       "key": "  Disk (/)     ",
       "folders": "/",
-      "keyColor": "magenta",
+      "keyColor": "magenta", // cyan
     },
     {
       "type": "disk",
       "key": "  Disk (/home) ",
       "folders": "/home",
       "keyColor": "cyan",
+    },
+    {
+      "type": "separator",
+      "string": "\n",
+      "length": 1,
+    },
+    {
+      "type": "colors",
+      "block": { "width": 4 },
     },
   ],
 }

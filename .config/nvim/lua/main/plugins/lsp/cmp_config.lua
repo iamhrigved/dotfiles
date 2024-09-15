@@ -12,16 +12,13 @@ return {
 				local parsed_snippet = vim.lsp.util.parse_snippet(snippet_value)
 				local snippet_preview = str.oneline(str.oneline(parsed_snippet))
 				vim_item.abbr = snippet_preview
-			elseif #vim_item.abbr > 15 then
+			elseif #vim_item.abbr > 20 then
 				vim_item.abbr = string.sub(vim_item.abbr, 1, 20) .. "..."
 			end
 			if vim_item.menu ~= nil then
 				if #vim_item.menu > 12 then
 					vim_item.menu = string.sub(vim_item.menu, 1, 12) .. "..."
 				end
-			end
-			if entry.source.name == "buffer" then
-				vim_item.kind = "󰈬 Buffer"
 			end
 			return vim_item
 		end

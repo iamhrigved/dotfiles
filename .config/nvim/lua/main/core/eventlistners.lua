@@ -15,10 +15,10 @@ autocmd("TextYankPost", {
 
 -- updating lazy plugins when loading
 -- autocmd("VimEnter", {
--- 	pattern = "*",
--- 	callback = function()
--- 		require("lazy").update({ show = false })
--- 	end,
+-- pattern = "*",
+-- callback = function()
+--  require("lazy").update({ show = false })
+-- end,
 -- })
 
 -- pwd was not changing so had to do this

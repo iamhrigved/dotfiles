@@ -8,7 +8,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.cursorline = true
-vim.opt.colorcolumn = "80"
 
 vim.opt.updatetime = 50
 
@@ -39,3 +38,7 @@ vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 5
 vim.opt.signcolumn = "yes"
+
+for k, v in pairs(vim.opt.listchars) do
+	print(k .. ": ", v)
+end

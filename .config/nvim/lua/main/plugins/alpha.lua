@@ -86,7 +86,7 @@ return {
 			end,
 		})
 
-		dashboard.section.header.val = header3.val
+		dashboard.section.header.val = header1
 
 		dashboard.config.opts = {
 			noautocmd = true,

@@ -1,7 +1,7 @@
 return {
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
-	config = function() 
+	config = function()
 		require("neo-tree").setup({
 			popup_border_style = "rounded",
 			enable_diagnostics = true,
@@ -13,9 +13,9 @@ return {
 					["h"] = "close_node",
 					["s"] = "open_vsplit",
 					["S"] = "open_split",
-					["a"] = { "add", config = { show_path = "relative", } },
+					["a"] = { "add", config = { show_path = "relative" } },
 					["H"] = "toggle_hidden",
-				}
+				},
 			},
 			filesystem = {
 				filtered_items = {
@@ -28,8 +28,24 @@ return {
 					leave_dirs_open = false,
 				},
 				hijack_netrw_behavior = "open_default",
-			}
-			,
+			},
+			default_component_configs = {
+				git_status = {
+					symbols = {
+						-- Change type
+						added = "",
+						modified = "",
+						deleted = "󱎘",
+						renamed = "",
+						-- Status type
+						untracked = "",
+						ignored = "",
+						unstaged = "󰄱",
+						staged = "",
+						conflict = "",
+					},
+				},
+			},
 		})
 
 		vim.keymap.set("n", "<leader>nt", "<cmd>Neotree reveal left<cr>", {})

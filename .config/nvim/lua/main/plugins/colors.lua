@@ -57,6 +57,14 @@ return {
 			vim.cmd("hi! MiniIndentscopeSymbol guifg=#346a73")
 			vim.cmd("hi! MiniIndentscopeSymbolOff guifg=#823c45")
 			vim.cmd("hi! NonText guifg=#393E45")
+
+			vim.cmd("hi! FlashLabel guibg=#e55561 guifg=#1f2329")
+
+			vim.cmd("hi MiniAnimateCursor guifg=#c0caf5")
+
+			-- colors formed by mixing default colors with bg colors
+			vim.cmd("hi GitSignsAdd guifg=#57704a")
+			vim.cmd("hi GitSignsChange guifg=#37658b")
 		end,
 	},
 	{ "akinsho/horizon.nvim", version = "*" },
