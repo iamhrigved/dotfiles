@@ -39,8 +39,8 @@ noremap("n", "<C-left>", "<C-w>5<")
 noremap("n", "<C-right>", "<C-w>5>")
 
 -- selection keybindings
-noremap("n", "n", "nzz")
-noremap("n", "N", "Nzz")
+-- noremap("n", "n", "nzz")
+-- noremap("n", "N", "Nzz")
 noremap("n", "<leader>hx", "<cmd>noh<CR>")
 
 noremap("n", "<CR>", "o<Esc>")
