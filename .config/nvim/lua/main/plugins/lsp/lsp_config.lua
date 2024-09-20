@@ -4,7 +4,7 @@ return {
 		local DiagnosticSigns = vim.g.DiagnosticSigns
 		DiagnosticSigns["priority"] = 10 -- NEVER CHANGE see gitsigns.lua
 
-		vim.keymap.set("n", "E", "<cmd>lua vim.diagnostic.open_float()<cr>") -- 'er' for popup and dg for telescope
+		vim.keymap.set("n", "<leader>e", "<cmd>lua vim.diagnostic.open_float()<cr>") -- 'er' for popup and dg for telescope
 		vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<cr>")
 		vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<cr>")
 

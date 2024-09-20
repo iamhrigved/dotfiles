@@ -15,7 +15,7 @@ return {
 			dashboard.button("o", "󱋡   Recently used files", ":Telescope oldfiles <CR>"),
 			dashboard.button("r", "   Open last session", ":SessionLoadLast<CR>"),
 			dashboard.button("z", "󰋚   Search Zoxide", ":Telescope zoxide list<CR>"),
-			dashboard.button("t", "󰊄   Find text", ":Telescope live_grep <CR>"),
+			-- dashboard.button("t", "󰊄   Find text", ":Telescope live_grep <CR>"),
 			dashboard.button("l", "󰒲   Open Lazy", ":Lazy <CR>"),
 			dashboard.button("c", "   Configuration", ":bd <BAR> :Neotree dir=~/.config/nvim <CR>"),
 			dashboard.button("q", "󰿅   Quit Neovim", ":qa<CR>"),

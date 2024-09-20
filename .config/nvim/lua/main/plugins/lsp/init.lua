@@ -75,4 +75,7 @@ return {
 	require("main.plugins.lsp.formatter"),
 
 	require("main.plugins.lsp.lsp_config"),
+
+	require("main.plugins.lsp.treesj"),
+	require("main.plugins.lsp.treesitter"),
 }
