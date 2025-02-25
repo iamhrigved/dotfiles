@@ -7,7 +7,9 @@ return {
 			options = {
 				mode = "buffers", -- set to "tabs" to only show tabpages instead
 				themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
-				numbers = "none", --| "ordinal" | "buffer_id" | "both", --| function({ ordinal, id, lower, raise }): string,
+				numbers = function(opts)
+					return string.format("%s", opts.raise(opts.ordinal))
+				end,
 				close_command = "bdelete! %d", -- can be a string | function, | false see "Mouse actions"
 				right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
 				left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
@@ -16,18 +18,24 @@ return {
 					icon = "▎", -- ▎this should be omitted if indicator style is not 'icon'
 					style = "underline",
 				},
-				buffer_close_icon = "󰅖 ",
+				buffer_close_icon = "",
 				modified_icon = "●",
 				close_icon = "",
-				hover = { enabled = true, delay = 200 },
+				hover = {
+					enabled = false,
+					delay = 1,
+					reveal = { "close" },
+				},
 				left_trunc_marker = "",
 				right_trunc_marker = "",
+				style_preset = {
+					require("bufferline").style_preset.no_italic,
+				},
 				max_name_length = 15,
 				max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
 				truncate_names = true, -- whether or not tab names should be truncated
 				tab_size = 18,
 				diagnostics = "nvim_lsp",
-				diagnostics_update_in_insert = false,
 				offsets = {
 					{
 						filetype = "neo-tree",
@@ -86,7 +94,7 @@ return {
 						if hintc ~= 0 then
 							table.insert(
 								result,
-								{ text = DiagnosticSigns["HINT"] .. hintc .. "  ", link = "DiagnosticSignHint" }
+								{ text = DiagnosticSigns["HINT"] .. " " .. hintc .. "  ", link = "DiagnosticSignHint" }
 							)
 						end
 
@@ -101,11 +109,21 @@ return {
 					end,
 				},
 			},
+			highlights = {
+				fill = {
+					fg = "",
+					bg = "",
+				},
+				background = {
+					fg = "",
+					bg = "",
+				},
+			},
 		})
 
-		vim.keymap.set("n", "<leader>bl", "<cmd>Neotree close<CR> <cmd>BufferLinePick<CR>", { noremap = true })
-		vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", { noremap = true })
-		vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", { noremap = true })
+		vim.keymap.set("n", "<leader>bl", "<cmd>BufferLinePick<CR>", { noremap = true })
+		vim.keymap.set("n", "I", "<cmd>BufferLineCycleNext<CR>", { noremap = true })
+		vim.keymap.set("n", "M", "<cmd>BufferLineCyclePrev<CR>", { noremap = true })
 	end,
 }
 

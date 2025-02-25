@@ -17,6 +17,7 @@ return {
 				jsonc = { "prettier", "prettierd" },
 				markdown = { "prettier" },
 				rust = { "rustfmt" },
+				haskell = { "fourmolu" },
 			},
 		})
 	end,

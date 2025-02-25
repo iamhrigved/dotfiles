@@ -1,10 +1,6 @@
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
-	init = function()
-		vim.b.miniindentscope_disable = true
-		vim.g.miniindentscope_disable = true
-	end,
 	config = function()
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
@@ -17,13 +13,18 @@ return {
 			dashboard.button("z", "󰋚   Search Zoxide", ":Telescope zoxide list<CR>"),
 			-- dashboard.button("t", "󰊄   Find text", ":Telescope live_grep <CR>"),
 			dashboard.button("l", "󰒲   Open Lazy", ":Lazy <CR>"),
-			dashboard.button("c", "   Configuration", ":bd <BAR> :Neotree dir=~/.config/nvim <CR>"),
+			dashboard.button(
+				"c",
+				"   Configuration",
+				":bd <BAR> :cd /home/hrigved/.config/nvim <BAR> :Oil /home/hrigved/.config/nvim/<CR>"
+			),
 			dashboard.button("q", "󰿅   Quit Neovim", ":qa<CR>"),
 		}
 
 		local datetime = os.date(" %d-%m-%Y    %H:%M:%S")
 
 		local header1 = {
+			"                                                     ",
 			"                                                     ",
 			"  ███╗   ██╗ ███████╗  ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗ ",
 			"  ████╗  ██║ ██╔════╝ ██╔═══██╗ ██║   ██║ ██║ ████╗ ████║ ",
@@ -35,7 +36,6 @@ return {
 			[[                 ]] .. datetime .. [[  ]],
 		}
 		local header2 = {
-
 			" ███▄    █ ▓█████  ▒█████   ██▒   █  ██▓ ███▄ ▄███▓   ",
 			" ██ ▀█   █ ▓█   ▀ ▒██▒  ██ ▓██░   █ ▓██▒ ██▒▀█▀ ██▒   ",
 			"▓██  ▀█ ██ ▒███   ▒██░  ██▒ ▓██  ██ ▒██▒ ██    ▓██░   ",
@@ -45,7 +45,6 @@ return {
 			"░ ░░   ░ ▒░ ░ ░  ░  ░ ▒ ▒░    ░ ░░   ▒ ░░ ░       ░   ",
 			"   ░   ░ ░    ░   ░ ░ ░ ▒       ░░   ▒ ░░      ░      ",
 			"         ░    ░  ░    ░ ░        ░   ░         ░      ",
-			"                                ░                     ",
 			"                                                      ",
 			[[                ]] .. datetime .. [[  ]],
 		}
@@ -91,7 +90,13 @@ return {
 		dashboard.config.opts = {
 			noautocmd = true,
 		}
-
+		dashboard.config.layout = {
+			{ type = "padding", val = 1 },
+			dashboard.section.header,
+			{ type = "padding", val = 2 },
+			dashboard.section.buttons,
+			dashboard.section.footer,
+		}
 		alpha.setup(dashboard.config)
 	end,
 }

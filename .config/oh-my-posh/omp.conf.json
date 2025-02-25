@@ -1,140 +1,94 @@
 {
-	"$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-	"blocks": [
-		{
-			"alignment": "left",
-			"segments": [
-				{
-					"foreground": "white",
-					"properties": {
-						"fetch_version": false
-					},
-					"style": "plain",
-					"template": "({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }})",
-					"type": "python"
-				}
-			],
-			"type": "prompt"
-		},
-		{
-			"type": "prompt",
-			"alignment": "left",
-			"newline": true,
-			"segments": [
-				{
-					"foreground": "darkGray",
-					"style": "plain",
-					"template": "\n",
-					"type": "text"
-				},
-				{
-					"foreground": "darkGray",
-					"style": "plain",
-					"template": "<red> </> ",
-					"type": "root"
-				},
-				{
-					"type": "text",
-					"foreground": "darkGray",
-					"style": "plain",
-					"template": "<blue> {{ .UserName }}</> @ <cyan> {{ .HostName }}</> "
-				},
-				{
-					"foreground": "darkGray",
-					"type": "path",
-					"style": "plain",
-					"template": "in <lightYellow>{{ .Path }}{{ if not .Writable }}<red> </>{{end}}</> ",
-					"properties": {
-						"style": "agnoster_short",
-						"max_depth": 1,
-						"folder_separator_icon": "/",
-						"home_icon": "  ~",
-						"mapped_locations": {
-							"/home/hrigved/My Programs": " Programs",
-							"/home/hrigved/My Programs/learn-rust/": " learn-rust",
-							"/home/hrigved/My Programs/learn-c/": " learn-c",
-							"/home/hrigved/.config/": " .config",
-							"/home/hrigved/.config/nvim/": " nvim"
-						}
-					}
-				},
-				{
-					"style": "plain",
-					"template": "<cyan>  {{ .HEAD }}</>{{ if gt .Behind 0 }}<cyan> </>{{ end }}{{ if gt .Ahead 0 }}<cyan> </>{{ end }}{{ if (.Working.Changed) }}<red> 󱎘{{ if gt .Working.Untracked 0 }}<red> ?{{ .Working.Untracked }}</>{{ end }}</>{{ end }} {{ if (.Staging.Changed) }}{{ if not (.Working.Changed) }}<green>󰸞 </>{{ end }}{{ .Staging.String }}{{ end }}",
-					"type": "git",
-					"properties": {
-						"fetch_status": true,
-						"branch_icon": " ",
-						"status_formats": {
-							"Added": " <green>+%d</>",
-							"Modified": " <blue>~%d</>",
-							"Deleted": " <red>-%d</>",
-							"Untracked": " <red>?%d</>"
-						}
-					}
-				}
-			]
-		},
-		{
-			"type": "prompt",
-			"alignment": "right",
-			"segments": [
-				{
-					"type": "executiontime",
-					"style": "plain",
-					"foreground": "darkGray",
-					"template": "<yellow> {{ .FormattedMs }}</>",
-					"properties": {
-						"style": "round",
-						"threshold": 500
-					}
-				},
-				{
-					"type": "time",
-					"foreground": "darkGray",
-					"style": "plain",
-					"template": " <lightMagenta>  {{ .CurrentDate | date .Format }}</>",
-					"properties": {
-						"time_format": "3:04 PM"
-					}
-				}
-			]
-		},
-		{
-			"alignment": "left",
-			"newline": true,
-			"segments": [
-				{
-					"foreground": "lightGreen",
-					"style": "plain",
-					"template": "<lightBlue>$ </>{{ if eq .Code 0 }}{{ else }}<lightRed></>{{ end }}",
-					"type": "text"
-				}
-			],
-			"type": "prompt"
-		},
-		{
-			"type": "rprompt",
-			"alignment": "right",
-			"segments": [
-				{
-					"type": "command",
-					"style": "plain",
-					"foreground": "darkGray",
-					"template": " <green> {{ .Output }}</> ",
-					"properties": {
-						"shell": "zsh",
-						"command": "source ~/prev_zsh_cmd.zsh"
-					}
-				}
-			]
-		}
-	],
-	"transient_prompt": {
-        "background": "transparent",
-        "foreground": "#ffffff",
-        "template": "{{ .Shelasdfl }}> "
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "blue",
+          "template": " {{ .UserName }}"
+        },
+        {
+          "foreground": "yellow",
+          "type": "path",
+          "style": "plain",
+          "template": "  {{ .Path }}{{ if not .Writable }}<red>  </>{{end}}",
+          "properties": {
+            "style": "full",
+            "max_depth": 2,
+            "folder_separator_icon": "/",
+            "home_icon": "~",
+            "mapped_locations": {
+              "/home/hrigved/My Programs": " Programs",
+              "/home/hrigved/My Programs/learn-rust/": " learn-rust",
+              "/home/hrigved/My Programs/learn-c/": " learn-c",
+              "/home/hrigved/.config/": " .config",
+              "/home/hrigved/.config/nvim/": " nvim"
+            }
+          }
+        },
+        {
+          "style": "plain",
+          "template": " <cyan>{{ .HEAD }}</>{{ if gt .Behind 0 }}<cyan> </>{{ end }}{{ if gt .Ahead 0 }}<cyan> </>{{ end }}{{ if (.Working.Changed) }}<red> 󱎘{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}</>{{ end }}{{ if (.Staging.Changed) }}{{ if not (.Working.Changed) }}<green> 󰸞</>{{ end }} {{ .Staging.String }}{{ end }}",
+          "type": "git",
+          "properties": {
+            "fetch_status": true,
+            "branch_icon": " ",
+            "status_formats": {
+              "Added": " <green>+%d</>",
+              "Modified": " <blue>~%d</>",
+              "Deleted": " <red>-%d</>",
+              "Untracked": " <red>?%d</>"
+            }
+          }
+        },
+        {
+          "type": "project",
+          "style": "plain",
+          "foreground_templates": [
+            "{{ if eq .Type \"cargo\" }}#CE412B{{ end }}",
+            "{{ if eq .Type \"cargo\" }}#CE412B{{ end }}"
+          ],
+          "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ if eq .Type \"cargo\" }} {{ else }} {{ end }}{{ .Name }}{{ end }} {{ if .Version }}v{{ .Version }}{{ end }}{{ end }}"
+        }
+      ]
     },
-	"final_space": true,
-	"version": 2
+    {
+      "type": "prompt",
+      "newline": true,
+      "alignment": "left",
+      "segments": [
+        {
+          "foreground": "blue",
+          "style": "plain",
+          "template": "$ {{ if eq .Code 0 }}<lightGreen>\u276f</>{{ else }}<lightRed>\u276f</>{{ end }}",
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "type": "rprompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "darkGray",
+          "template": "<yellow> {{ .FormattedMs }}</>",
+          "properties": {
+            "style": "round",
+            "threshold": 500
+          }
+        }
+      ]
+    }
+  ],
+
+  "final_space": true,
+  "version": 2
 }

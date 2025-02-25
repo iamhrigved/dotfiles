@@ -54,17 +54,6 @@ return {
 			require("flash").toggle()
 		end)
 
-		vim.keymap.set("n", "en", function()
-			require("flash").jump({
-				search = { mode = "search", max_length = 0 },
-				label = { after = { 0, 0 } },
-				highlight = {
-					backdrop = false,
-				},
-				pattern = "$",
-			})
-		end)
-
 		-- find diagnostics
 		vim.keymap.set("n", "<leader>fd", function()
 			require("flash").jump({

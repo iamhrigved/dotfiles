@@ -45,12 +45,27 @@ gui:
 
 keybinding:
   universal:
+    # prevBlock-alt: 'm' # no need to go left and right when you can type numbers
+    # nextBlock-alt: 'i'
+    nextItem-alt: 'n'
+    prevItem-alt: 'e'
+    nextMatch: 'k'
+    prevMatch: 'K'
+    scrollUpMain-alt1: 'E'
+    scrollDownMain-alt1: 'N'
+    scrollUpMain-alt2: '<c-e>'
+    scrollDownMain-alt2: '<c-n>'
     undo: 'u'
     redo: '<c-r>'
     quit: '<c-q>'
     openRecentRepos: '<c-o>'
     copyToClipboard: '<c-y>'
+  branches:
+    viewGitFlowOptions: 'i'
+    setUpstream: 'u'
+  files:
+    ignoreFile: 'i'
   commits:
-    moveDownCommit: '<c-p>'
-    moveUpCommit: '<c-n>'
+    moveUpCommit: '<c-e>'
+    moveDownCommit: '<c-n>'
     openLogMenu: '<disabled>'

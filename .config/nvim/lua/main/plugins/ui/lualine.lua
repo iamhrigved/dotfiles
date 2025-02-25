@@ -48,6 +48,7 @@ return {
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = {
+						"alpha",
 						"neo-tree",
 						"undotree",
 						"diff",
@@ -57,11 +58,6 @@ return {
 				ignore_focus = {},
 				always_divide_middle = true,
 				globalstatus = true,
-				refresh = {
-					statusline = 1000,
-					tabline = 1000,
-					winbar = 1000,
-				},
 			},
 			sections = {
 				lualine_a = {
@@ -74,13 +70,13 @@ return {
 					},
 				},
 				lualine_b = {
-					{
-						function()
-							return ""
-						end,
-						padding = 0,
-						color = { bg = "#42464e", fg = "#2d3139" },
-					},
+					-- {
+					-- 	function()
+					-- 		return ""
+					-- 	end,
+					-- 	padding = 0,
+					-- 	color = { bg = "#42464e", fg = "#24272e" },
+					-- },
 					{
 						filename_with_icon,
 						color = { gui = "italic" },
@@ -91,14 +87,19 @@ return {
 					{
 						"branch",
 						icon = "", -- 
-						color = "DefaultCyan",
+						color = "Comment", --DefaultCyan
 					},
 					{
 						"diff",
 						diff_color = {
-							added = "DefaultGreen",
-							removed = "DefaultRed",
-							modified = "DefaultBlue",
+							added = "Comment", --DefaultGreen
+							removed = "Comment", --DefaultRed
+							modified = "Comment", --DefaultBlue
+						},
+						symbols = {
+							added = "󰐖 ",
+							modified = " ",
+							removed = "󰍵 ",
 						},
 					},
 				},
@@ -112,22 +113,28 @@ return {
 						require("noice").api.status.command.get,
 						cond = require("noice").api.status.command.has,
 						color = "DefaultYellow",
+						timeout = 50,
 					},
 					lualine_lsp,
 				},
 				lualine_y = {
 					{
+						"searchcount",
+						timeout = 200,
+						maxcount = 999,
+					},
+					{
 						"progress",
 						cond = default_cond,
 					},
-					{
-						function()
-							return ""
-						end,
-						padding = 0,
-						color = { bg = "#42464e", fg = "#2d3139" },
-						cond = default_cond,
-					},
+					-- {
+					-- 	function()
+					-- 		return ""
+					-- 	end,
+					-- 	padding = 0,
+					-- 	color = { bg = "#42464e", fg = "#24272e" },
+					-- 	cond = default_cond,
+					-- },
 				},
 				lualine_z = {
 					{

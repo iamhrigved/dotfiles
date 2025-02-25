@@ -1,9 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export TERM='xterm-kitty'
-export KEYTIMEOUT=50
 export EDITOR='nvim'
-export XDG_SCREENSHOTS_DIR=$HOME/Pictures/Screenshots
 export HOMEBREW_AUTO_UPDATE_SECS=172800
 
 if [[ ! $(echo $TMUX) == "" ]]; then # if inside tmux
@@ -27,15 +25,17 @@ eval "$(oh-my-posh init zsh --config $PROMPT_CONFIG)"
 
 # CUSTOM ALIASES :
 
-alias lsl="echo "" && eza --all --git --color=always --icons=always --long"
+alias lsl="eza --all --git --color=always --icons=always --long"
 ls() {
 	local col_num=$(tput cols)
 	local width=$[ 8 * $col_num / 10 ]
-	echo "" && eza --all --width=$width --color=always --icons=always $@
+	eza --all --width=$width --color=always --icons=always $@
+}
+lst() {
+    eza --all --color=always --icons=always --tree --level $@
 }
 
 alias vi="nvim"
-alias ex="explorer.exe"
 alias c="clear"
 alias rg="rg --hyperlink-format=kitty"
 alias vish="nvim ~/.zshrc"
@@ -45,19 +45,14 @@ alias vikt="nvim ~/.config/kitty/kitty.conf"
 alias vihp="nvim ~/.config/hypr"
 alias exsh="exec zsh"
 
-alias pS="sudo pacman -S"
-alias pR="sudo pacman -R"
-alias pQ="pacman -Q"
-
-alias ys="yay -Ss"
-alias yS="yay -S"
-alias yR="yay -R"
-alias yQ="yay -Q"
+alias p="pacman"
+alias pS="paru -S"
+alias pSs="paru -Ss"
 
 alias tm="tmux"
 
 d() {
-    sh -c "dolphin $@ &!"
+    dolphin $@ &!
 }
 
 tmks() {
@@ -83,17 +78,10 @@ alias lg="lazygit"
 
 runc() {
 	local file_location=$1
+    local file_type=$(echo $file_location | sed "s/.*\.\(.*\)/\1/" | sed "s/p/+/g") # `c` or `c++`
 	local file_name=${1:t}
 	local file_directory=${1:h}
 	local exe_file_name=${file_name:r}
-	local is_local=""
-	local exe_file_location=""
-
-	if [[ $file_directory == "." ]]; then 
-		is_local=true
-	else
-		is_local=false
-	fi
 
     # if the file compiles without any errors this will run
     local run() {
@@ -105,10 +93,11 @@ runc() {
 
             mv ./a.out ./executables/$exe_file_name
             echo "" # printing new lines
-            ./executables/$exe_file_name
+            ./executables/$exe_file_name $@
             echo ""
     }
-    g++ $file_location && run
+    echo "g++ $file_location -x $file_type && run $@"
+    g++ $file_location -x $file_type && run $@
 }
 
 # history config options
@@ -131,6 +120,47 @@ zstyle ':completion:*' menu no
 # zoxide :
 eval "$(zoxide init zsh --cmd cd)"
 
+# zsh-vi-mode config
+
+function zvm_config() {
+    ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+    ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
+
+    ZVM_VI_HIGHLIGHT_BACKGROUND=blue
+    ZVM_VI_HIGHLIGHT_FOREGROUND=white
+
+    # Enter the vi insert mode (overwritten)
+    function zvm_enter_insert_mode() {
+      local keys=${1:-$(zvm_keys)}
+
+      if [[ $keys == 'l' ]]; then
+        ZVM_INSERT_MODE='i'
+      elif [[ $keys == 'a' ]]; then
+        ZVM_INSERT_MODE='a'
+        if ! zvm_is_empty_line; then
+          CURSOR=$((CURSOR+1))
+        fi
+      fi
+
+      zvm_reset_repeat_commands $ZVM_MODE_NORMAL $ZVM_INSERT_MODE
+      zvm_select_vi_mode $ZVM_MODE_INSERT
+    }
+    
+    # custom keybinds
+    zvm_after_init_commands+=(
+    "bindkey '^N' history-search-forward"
+    "bindkey '^P' history-search-backward"
+    "bindkey '^Y' autosuggest-accept"
+    )
+
+    zvm_bindkey vicmd 'm' vi-backward-char
+    zvm_bindkey vicmd 'n' vi-down-line-or-history
+    zvm_bindkey vicmd 'e' vi-up-line-or-history
+    # 'i' is not working 😭
+
+    zvm_bindkey vicmd 'l' zvm_enter_insert_mode
+    zvm_bindkey vicmd 'L' zvm_insert_bol
+}
 
 export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
@@ -173,8 +203,8 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 # Plugins 
+zinit ice depth=1
 zinit snippet OMZP::git
-zinit snippet OMZP::vi-mode
 
 zinit snippet https://github.com/MichaelAquilina/zsh-you-should-use/blob/master/you-should-use.plugin.zsh
 
@@ -182,18 +212,12 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
+zinit light jeffreytse/zsh-vi-mode
 
 autoload -U compinit && compinit
 
-# vi-mode config options
-bindkey '^n' history-search-forward
-bindkey '^p' history-search-backward
-bindkey '^y' autosuggest-accept
-
-bindkey -M viins 'kj' vi-cmd-mode
-
-export VI_MODE_SET_CURSOR=true
-export VI_MODE_CURSOR_INSERT=1
+# vi-mode config options for Colemak-DH
+# see above
 
 # fzf config options
 source <(fzf --zsh)
@@ -217,4 +241,6 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # invoking fastfetch
-fastfetch --logo-padding-right 5 --logo-padding-left 2 #-l ~/Pictures/Wallpapers/pngwing.com.png --logo-width 41 --logo-height 19 --logo-padding-right 10
+cat ~/.config/fastfetch/archlinux.txt && fastfetch --logo none
+
+[ -f "/home/hrigved/.ghcup/env" ] && . "/home/hrigved/.ghcup/env" # ghcup-env

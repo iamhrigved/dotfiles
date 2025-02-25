@@ -1,7 +1,12 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "display": {
-    "separator": " ->    ",
+    //"separator": " ->    ",
+    "separator": "    ",
+
+    "color": {
+      "keys": "37",
+    },
     "size": {
       "binaryPrefix": "jedec",
     },
@@ -10,31 +15,30 @@
     {
       "type": "title",
       "color": { "user": "blue" },
-      "format": "{user-name-colored} {at-symbol-colored} {host-name-colored}",
+      "format": "     {user-name-colored} {at-symbol-colored} {host-name-colored}",
     },
     {
-      "type": "separator",
-      "string": "─",
-      "length": 17,
+      "type": "custom",
+      "key": "    ╭─────────────────╮",
     },
     {
-      "key": "  OS           ",
-      "keyColor": "red",
+      "key": "    │ {#36}  OS           {#keys}│",
+      //"keyColor": "cyan", // cyan magenta blue yellow green red
       "type": "os",
     },
+    //{
+    //  "key": "  Kernel       ",
+    //  "keyColor": "green",
+    //  "type": "kernel",
+    //},
     {
-      "key": "  Kernel       ",
-      "keyColor": "green",
-      "type": "kernel",
-    },
-    {
-      "key": "󰥔  Uptime       ",
-      "keyColor": "yellow",
+      "key": "    │ {#35}󰥔  Uptime       {#keys}│",
+      //"keyColor": "magenta", // yellow
       "type": "uptime",
     },
     {
-      "key": "  WM           ",
-      "keyColor": "blue",
+      "key": "    │ {#34}  WM           {#keys}│",
+      //"keyColor": "blue", // blue
       "type": "wm",
     },
     //{
@@ -42,16 +46,16 @@
     //  "keyColor": "magenta",
     //  "type": "de",
     //},
-    {
-      "key": "  Shell        ",
-      "keyColor": "magenta", // cyan
-      "type": "shell",
-    },
-    {
-      "key": "  Terminal     ",
-      "keyColor": "cyan", // red
-      "type": "terminal",
-    },
+    //{
+    //  "key": "  Shell        ",
+    //  "keyColor": "magenta", // cyan
+    //  "type": "shell",
+    //},
+    //{
+    //  "key": "  Terminal     ",
+    //  "keyColor": "cyan", // red
+    //  "type": "terminal",
+    //},
     //{
     //  "type": "terminalfont",
     //  "key": "  Font         ",
@@ -67,23 +71,23 @@
     //  "keyColor": "blue",
     //  "type": "gpu",
     //},
+    //{
+    //  "type": "command",
+    //  "keyColor": "red", // cyan
+    //  "text": "$EDITOR --version | head -1",
+    //  "key": "  Editor       ",
+    //},
     {
-      "type": "command",
-      "keyColor": "red", // cyan
-      "text": "$EDITOR --version | head -1",
-      "key": "  Editor       ",
-    },
-    {
-      "key": "  Memory       ",
-      "keyColor": "green", // magenta
+      "key": "    │ {#33}  Memory       {#keys}│",
+      //"keyColor": "yellow", // magenta
       "type": "memory",
     },
-    {
-      "key": "󰩟  Local IP     ",
-      "keyColor": "yellow",
-      "type": "localip",
-      "compact": true,
-    },
+    //{
+    //  "key": "󰩟  Local IP     ",
+    //  "keyColor": "yellow",
+    //  "type": "localip",
+    //  "compact": true,
+    //},
     //{
     //  "type": "packages",
     //  "key": "  Packages     ",
@@ -91,29 +95,33 @@
     //},
     {
       "type": "swap",
-      "key": "  Swap         ",
-      "keyColor": "blue", // magenta
+      "key": "    │ {#32}  Swap         {#keys}│",
+      //"keyColor": "green",
     },
+    //{
+    //  "type": "disk",
+    //  "key": "  Disk (/)     ",
+    //  "folders": "/",
+    //  "keyColor": "magenta", // cyan
+    //},
     {
       "type": "disk",
-      "key": "  Disk (/)     ",
-      "folders": "/",
-      "keyColor": "magenta", // cyan
-    },
-    {
-      "type": "disk",
-      "key": "  Disk (/home) ",
+      "key": "    │ {#31}  Disk (/home) {#keys}│",
       "folders": "/home",
-      "keyColor": "cyan",
+      //"keyColor": "red",
     },
     {
-      "type": "separator",
-      "string": "\n",
-      "length": 1,
+      "key": "    ├─────────────────┤",
+      "type": "custom",
     },
     {
+      "key": "    │ {#36}  Colors       {#keys}│",
       "type": "colors",
-      "block": { "width": 4 },
+      "symbol": "circle",
+    },
+    {
+      "key": "    ╰─────────────────╯",
+      "type": "custom",
     },
   ],
 }

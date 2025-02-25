@@ -4,9 +4,6 @@ return {
 		"HiPhish/rainbow-delimiters.nvim",
 		{
 			"echasnovski/mini.indentscope",
-			init = function()
-				vim.b.miniindentscope_disable = true
-			end,
 		},
 	},
 	config = function()

@@ -32,23 +32,23 @@ return {
 
 		vim.keymap.set("n", "<leader>ss", "<cmd>Telescope persisted<CR>")
 
-		-- closing neo-tree when saving
-		vim.api.nvim_create_autocmd("User", {
-			pattern = "PersistedSavePre",
-			callback = function()
-				vim.cmd("Neotree close")
-			end,
-		})
-
+		-- -- closing neo-tree when saving
+		-- vim.api.nvim_create_autocmd("User", {
+		-- 	pattern = "PersistedSavePre",
+		-- 	callback = function()
+		-- 		vim.cmd("Neotree close")
+		-- 	end,
+		-- })
+		--
 		-- opening neo-tree when loading
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "PersistedLoadPost",
 			callback = function()
 				local cwd = vim.fn.getcwd()
-				require("neo-tree.command").execute({
-					action = "close",
-					dir = cwd,
-				})
+				-- require("neo-tree.command").execute({
+				-- 	action = "close",
+				-- 	dir = cwd,
+				-- })
 				local t = {}
 				for i in string.gmatch(cwd, "([^/]+)") do
 					table.insert(t, i)
@@ -57,6 +57,6 @@ return {
 				-- so had to find a way to delete it
 			end,
 		})
-		vim.o.sessionoptions = "buffers,curdir,localoptions,folds,tabpages,winpos,winsize"
+		vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
 	end,
 }

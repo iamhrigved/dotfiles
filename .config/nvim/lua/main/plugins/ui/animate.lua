@@ -15,13 +15,12 @@ return {
 
 		animate.setup({
 			cursor = {
-				enable = true,
-				timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+				enable = false, -- kitty can generate the animation
 			},
 
 			scroll = {
 				enable = true,
-				timing = animate.gen_timing.linear({ duration = 150, unit = "total" }),
+				timing = animate.gen_timing.linear({ duration = 100, unit = "total" }),
 				subscroll = animate.gen_subscroll.equal({
 					predicate = function(total_scroll)
 						if mouse_scrolled then

@@ -17,7 +17,7 @@ return {
 				-- these will be buffer-local keybindings
 				-- because they only work if you have an active language server
 
-				vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+				vim.keymap.set("n", "<leader>k", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
 				vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
 				vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
 				-- vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts) in telescope.lua
@@ -64,7 +64,6 @@ return {
 			},
 			severity_sort = true,
 			underline = true,
-			virtual_lines = true,
 			update_in_insert = false,
 			float = {
 				-- UI.
@@ -72,16 +71,20 @@ return {
 				border = "rounded",
 				focusable = true,
 			},
+			virtual_lines = {
+				current_line = true,
+			},
 			virtual_text = {
 				spacing = 4,
+				virt_text_pos = "eol",
 				source = "if_many",
 				prefix = "󱓻 ",
 			},
 		})
 
 		-- default capabilities and on_attatch functions:
-		local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-		lsp_capabilities.textDocument.foldingRange = {
+		local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
+		default_capabilities.textDocument.foldingRange = {
 			dynamicRegistration = false,
 			lineFoldingOnly = true,
 		}
@@ -97,7 +100,7 @@ return {
 		-- default setup for differenet lsp's
 		local setup = function(server, opts)
 			local default_opts = {
-				capabilities = lsp_capabilities,
+				capabilities = default_capabilities,
 				on_attach = default_on_attach,
 			}
 			for k, v in pairs(opts) do
@@ -109,11 +112,6 @@ return {
 		-- configuring all lsp installed via mason
 		require("mason-lspconfig").setup_handlers({
 			function(server_name)
-				-- if server_name == "jsonls" then
-				--     return setup(server_name, {
-				--
-				--     })
-				-- end
 				return setup(server_name, {})
 			end,
 		})
@@ -140,7 +138,7 @@ return {
 				},
 			},
 			server = {
-				capabilities = lsp_capabilities,
+				capabilities = default_capabilities,
 				on_attatch = default_on_attach,
 				default_settings = {
 					["rust-analyzer"] = {

@@ -1,5 +1,5 @@
 [http]
-	postBuffer = 157286400
+	postBuffer = 524288000
 	version = HTTP/1.1
 [credential "https://github.com"]
 	helper = 
@@ -13,8 +13,8 @@
 [browser]
 	chromium = brave
 [alias]
-	lga = log --graph --abbrev-commit --all --color=always --pretty=format:'%C(red)%h%C(reset)%C(auto)%d%C(reset) - %s %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset) %n'
-	lg = log --graph --abbrev-commit --color=always --pretty=format:'%C(red)%h%C(reset)%C(auto)%d%C(reset) - %s %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset) %n'
+	lga = log --graph --abbrev-commit --all --color=always --pretty=format:'%C(red)%h%C(reset)%C(auto)%d%C(reset) - %s %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset)'
+	lg = log --graph --abbrev-commit --color=always --pretty=format:'%C(red)%h%C(reset)%C(auto)%d%C(reset) - %s %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset)'
 
 [init]
 	defaultBranch = main

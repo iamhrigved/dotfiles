@@ -2,7 +2,7 @@ return {
 	"nvim-telescope/telescope.nvim",
 	config = function()
 		local builtin = require("telescope.builtin")
-		-- local trouble = require("trouble.sources.telescope")
+		local trouble = require("trouble.sources.telescope")
 		local z_utils = require("telescope._extensions.zoxide.utils")
 
 		local function getVisualSelection()
@@ -22,9 +22,12 @@ return {
 		vim.keymap.set("n", "<leader>ff", function()
 			return builtin.find_files({ follow = true })
 		end, {})
-		vim.keymap.set("n", "<leader>lg", function()
+		vim.keymap.set("n", "<leader>hh", builtin.help_tags, {})
+		vim.keymap.set("n", "<leader>fw", function()
 			return builtin.live_grep({ additional_args = { "-L" } })
 		end, {})
+		vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, {})
+		vim.keymap.set("n", "<leader>ws", builtin.lsp_workspace_symbols, {})
 		vim.keymap.set("n", "<leader>fz", builtin.current_buffer_fuzzy_find, {})
 		vim.keymap.set("n", "<leader>gs", function()
 			return builtin.grep_string({ additional_args = { "-L" } })
@@ -48,11 +51,13 @@ return {
 				sorting_strategy = "ascending",
 				mappings = {
 					i = {
-						-- ["<c-t>"] = trouble.open,
-						["<c-j>"] = require("telescope.actions").move_selection_next,
-						["<c-k>"] = require("telescope.actions").move_selection_previous,
+						["<c-t>"] = trouble.open,
+						["<c-n>"] = require("telescope.actions").move_selection_next,
+						["<c-e>"] = require("telescope.actions").move_selection_previous,
+						["<C-s>"] = require("telescope.actions").select_vertical,
+						["<C-h>"] = require("telescope.actions").select_horizontal,
 					},
-					-- n = { ["<c-t>"] = trouble.open },
+					n = { ["<c-t>"] = trouble.open },
 				},
 				layout_config = {
 					prompt_position = "top",
@@ -84,6 +89,7 @@ return {
 									vim.cmd("BufDelAll")
 								end
 								vim.cmd.cd(selection.path)
+								require("oil").open(selection.path)
 							end,
 							after_action = function(selection)
 								print('Switched to "' .. selection.path .. '"')
@@ -92,22 +98,9 @@ return {
 								end)
 							end,
 						},
-						["<C-Space>"] = {
-							action = function(selection)
-								vim.cmd("SessionSave")
-								vim.cmd.cd(selection.path)
-							end,
-							after_action = function(selection)
-								print("Director changed to " .. selection.path)
-								vim.schedule(function()
-									vim.cmd("SessionLoad")
-								end)
-							end,
-						},
 						["<C-s>"] = { action = z_utils.create_basic_command("split") },
 						["<C-v>"] = { action = z_utils.create_basic_command("vsplit") },
 						["<C-e>"] = { action = z_utils.create_basic_command("edit") },
-						["<C-q>"] = { action = z_utils.create_basic_command("split") },
 						["<C-t>"] = {},
 					},
 				},

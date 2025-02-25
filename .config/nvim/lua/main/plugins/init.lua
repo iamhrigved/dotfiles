@@ -2,7 +2,6 @@ return {
 	-- mandatory dependencies
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lua/plenary.nvim",
-	"christoomey/vim-tmux-navigator",
 	"MunifTanjim/nui.nvim",
 	"rcarriga/nvim-notify",
 
@@ -20,9 +19,10 @@ return {
 	-- basic plugins
 	{
 		"kylechui/nvim-surround",
-		version = "main",
 		event = "VeryLazy",
-		opts = {},
+		config = function()
+			require("nvim-surround").setup({})
+		end,
 	},
 	{
 		"ojroques/nvim-bufdel",
@@ -37,8 +37,6 @@ return {
 		"iamcco/markdown-preview.nvim",
 		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
 		ft = { "markdown" },
-		build = function()
-			vim.fn["mkdp#util#install"]()
-		end,
+		build = "npm install",
 	},
 }

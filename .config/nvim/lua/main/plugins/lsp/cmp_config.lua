@@ -13,7 +13,7 @@ return {
 				local snippet_preview = str.oneline(str.oneline(parsed_snippet))
 				vim_item.abbr = snippet_preview
 			elseif #vim_item.abbr > 20 then
-				vim_item.abbr = string.sub(vim_item.abbr, 1, 20) .. "..."
+				vim_item.abbr = string.sub(vim_item.abbr, 1, 30) .. "..."
 			end
 			if vim_item.menu ~= nil then
 				if #vim_item.menu > 12 then
@@ -35,14 +35,14 @@ return {
 		-- basic autocomplete
 		cmp.setup({
 			sources = {
-				{ name = "nvim_lsp" },
-				{ name = "buffer" },
-				{ name = "emoji" },
+				{ name = "nvim_lsp", group_index = 1 },
+				{ name = "buffer", group_index = 2 },
+				{ name = "emoji", group_index = 3 },
 			},
 
 			window = {
 				documentation = {
-					scrollbar = "|",
+					scrollbar = false,
 					max_height = 15,
 					max_width = math.floor(0.8 * vim.api.nvim_win_get_width(0)),
 					winhighlight = "Normal:CmpPmenu,Search:None,CursorLine:Pmenu,CmpBorder:FlaotBorder", -- border will be the same as border of Noice cmdline_popup
@@ -52,30 +52,35 @@ return {
 				completion = {
 					col_offset = 0,
 					side_padding = 1,
-					scrollbar = "|",
-					winhighlight = "Normal:CmpPmenu,CursorLine:Visual,Search:None,CmpBorder:FloatBorder", -- border will be the same as border of Noice cmdline_popup
+					scrollbar = true,
+					winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None,CmpBorder:FloatBorder", -- border will be the same as border of Noice cmdline_popup
 					border = "rounded",
 				},
 			},
+			-- performance = {
+			-- 	max_view_entries = 20,
+			-- },
 			preselect = "item",
 			completion = {
 				completeopt = "menu,menuone,preview,noinsert",
 			},
 			formatting = {
-				fields = { "abbr", "menu", "kind" },
+				fields = { "kind", "abbr", "menu" },
 				format = function(entry, vim_item)
 					local item = lspKindFormat(entry, vim_item)
-					item.kind = item.kind .. " "
+					local strings = vim.split(item.kind, "%s", { trimempty = true })
+					item.kind = (strings[1] or "") .. " "
+					item.menu = "    " .. (strings[2] or "")
 					return item
 				end,
 			},
 
 			mapping = cmp.mapping.preset.insert({
-				["<Tab>"] = cmp.mapping.confirm({ select = true }),
+				["<C-y>"] = cmp.mapping.confirm({ select = true }),
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-c>"] = cmp.mapping.abort(),
-				["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-				["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+				["<C-e>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+				["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
 				["<C-f>"] = cmp.mapping.scroll_docs(4),
 			}),
@@ -89,10 +94,6 @@ return {
 			experimental = {
 				ghost_text = true,
 			},
-
-			performance = {
-				max_view_entries = 15,
-			},
 		})
 
 		-- autocomplete for command line
@@ -101,8 +102,8 @@ return {
 			mapping = cmp.mapping.preset.cmdline({
 				["<Tab>"] = { c = cmp.mapping.confirm({ select = true }) },
 				["<C-Space>"] = { c = cmp.mapping.complete() },
-				["<C-k>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
-				["<C-j>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
+				["<C-e>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
+				["<C-n>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
 				["<C-c>"] = { c = cmp.mapping.abort() },
 			}),
 			sources = cmp.config.sources({
@@ -115,10 +116,10 @@ return {
 		-- `:` cmdline setup.
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline({
-				["<Tab>"] = { c = cmp.mapping.confirm({ select = true }) },
+				["<C-y>"] = { c = cmp.mapping.confirm({ select = true }) },
 				["<C-Space>"] = { c = cmp.mapping.complete() },
-				["<C-k>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
-				["<C-j>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
+				["<C-e>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
+				["<C-n>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
 				["<C-c>"] = { c = cmp.mapping.abort() },
 			}),
 			sources = cmp.config.sources({
@@ -133,10 +134,24 @@ return {
 			}),
 			window = {
 				completion = {
-					scrollbar = "|",
+					scrollbar = false,
 				},
 			},
 		})
+
+		-- luasnip keybindings
+		vim.keymap.set({ "i", "s" }, "<Tab>", function()
+			local ls = require("luasnip")
+			if ls.jumpable() then
+				ls.jump(1)
+			end
+		end)
+		vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+			local ls = require("luasnip")
+			if ls.jumpable(-1) then
+				ls.jump(-1)
+			end
+		end)
 
 		-- config for autopairs.
 		require("nvim-autopairs").setup() -- initialize the plugin

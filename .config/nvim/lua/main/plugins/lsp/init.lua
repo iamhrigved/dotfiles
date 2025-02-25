@@ -1,29 +1,30 @@
-vim.g.DiagnosticSigns = { ERROR = "󰅙 ", WARN = " ", HINT = "󰌵", INFO = " " }
+vim.g.DiagnosticSigns = { ERROR = "󰚌 ", WARN = " ", HINT = "󰌵", INFO = " " }
 vim.g.LspKinds = {
-	Class = "󰠱", --
-	Color = "",
-	Constant = "󰏿", -- 
+	Array = "",
+	Boolean = "󰨙",
+	Class = "",
+	Constant = "󰏿",
 	Constructor = "󱁤",
 	Enum = "",
 	EnumMember = "",
-	Event = "", --
+	Event = "",
 	Field = "󰜢",
 	File = "󰈙",
-	Folder = "󰉋",
-	Function = "󰡱 ", --
-	Interface = "", --
-	Keyword = "󰌋",
-	Method = "", --
-	Module = "", --
-	Operator = "󰆕",
-	Property = "",
-	Reference = "",
-	Snippet = "", -- 
-	Struct = "󰙅",
-	Text = "󰉿", --
-	TypeParameter = "",
-	Unit = "",
-	Value = "󰎠",
+	Function = "󰡱",
+	Interface = "",
+	Key = "",
+	Method = "󰡱",
+	Module = "",
+	Namespace = "󰦮",
+	Null = "󰟢",
+	Number = "",
+	Object = "",
+	Operator = "",
+	Package = "",
+	Property = "󰜢",
+	String = "󰉿",
+	Struct = "󰆼",
+	TypeParameter = "",
 	Variable = "󰀫󰂡",
 }
 
@@ -71,6 +72,7 @@ return {
 	"SmiteshP/nvim-navic",
 	"williamboman/mason.nvim",
 	"williamboman/mason-lspconfig",
+	"antosha417/nvim-lsp-file-operations", -- see setup fn in neotree.lua
 	require("main.plugins.lsp.lint"),
 	require("main.plugins.lsp.formatter"),
 
@@ -78,4 +80,6 @@ return {
 
 	require("main.plugins.lsp.treesj"),
 	require("main.plugins.lsp.treesitter"),
+
+	require("main.plugins.lsp.lightbulb"),
 }

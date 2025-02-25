@@ -4,6 +4,7 @@ return {
 		require("lint").linters_by_ft = {
 			markdown = { "markdownlint" },
 			json = { "jsonlint" },
+			haskell = { "hlint" },
 		}
 		vim.api.nvim_create_autocmd({ "BufEnter" }, {
 			callback = function()
@@ -16,5 +17,5 @@ return {
 				-- require("lint").try_lint("cspell")
 			end,
 		})
-	end
+	end,
 }
