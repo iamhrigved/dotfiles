@@ -12,6 +12,7 @@ vim.opt.cursorline = true
 vim.opt.updatetime = 50
 
 vim.opt.spell = true
+vim.opt.spelloptions = "camel,noplainbuffer"
 
 vim.opt.smartindent = true
 vim.opt.expandtab = true
@@ -39,3 +40,8 @@ vim.opt.mousemoveevent = true
 
 vim.opt.scrolloff = 5
 vim.opt.signcolumn = "yes"
+
+-- vim.opt.list = true
+-- vim.opt.listchars:append({
+-- 	tab = " ·",
+-- })

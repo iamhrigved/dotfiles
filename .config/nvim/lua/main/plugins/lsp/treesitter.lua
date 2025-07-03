@@ -1,5 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	-- TODO: migrate to main branch
+	branch = "master",
 	build = function()
 		local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
 		ts_update()
@@ -50,10 +52,15 @@ return {
 					},
 					selection_modes = {
 						["@function.outer"] = "V",
+						["@function.inner"] = "V",
 						["@class.outer"] = "V",
+						["@class.inner"] = "V",
 						["@loop.outer"] = "V",
+						["@loop.inner"] = "V",
 						["@conditional.outer"] = "V",
+						["@conditional.inner"] = "V",
 						["@comment.outer"] = "V",
+						["@comment.inner"] = "V",
 					},
 				},
 				move = {
@@ -93,6 +100,14 @@ return {
 						["<leader>dF"] = "@class.outer",
 					},
 				},
+			},
+		})
+
+		require("nvim-ts-autotag").setup({
+			opts = {
+				enable_close = true,
+				enable_rename = true,
+				enable_close_on_slash = false,
 			},
 		})
 	end,

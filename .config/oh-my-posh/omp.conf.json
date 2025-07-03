@@ -1,94 +1,120 @@
 {
-  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-
-  "blocks": [
-    {
-      "type": "prompt",
-      "alignment": "left",
-      "newline": true,
-      "segments": [
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "blocks": [
         {
-          "type": "text",
-          "style": "plain",
-          "foreground": "blue",
-          "template": " {{ .UserName }}"
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [
+                {
+                    "properties": {
+                        "cache_duration": "none",
+                        "fetch_version": false
+                    },
+                    "template": "(\udb80\udf20 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }}{{ end }}{{ .Full }}{{ end }}) ",
+                    "foreground": "yellow",
+                    "type": "python",
+                    "style": "plain"
+                }
+            ],
+            "newline": true
         },
         {
-          "foreground": "yellow",
-          "type": "path",
-          "style": "plain",
-          "template": "  {{ .Path }}{{ if not .Writable }}<red>  </>{{end}}",
-          "properties": {
-            "style": "full",
-            "max_depth": 2,
-            "folder_separator_icon": "/",
-            "home_icon": "~",
-            "mapped_locations": {
-              "/home/hrigved/My Programs": " Programs",
-              "/home/hrigved/My Programs/learn-rust/": " learn-rust",
-              "/home/hrigved/My Programs/learn-c/": " learn-c",
-              "/home/hrigved/.config/": " .config",
-              "/home/hrigved/.config/nvim/": " nvim"
-            }
-          }
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [
+                {
+                    "properties": {
+                        "cache_duration": "none"
+                    },
+                    "template": "\uf007 {{ .UserName }}",
+                    "foreground": "blue",
+                    "type": "text",
+                    "style": "plain"
+                },
+                {
+                    "properties": {
+                        "cache_duration": "none",
+                        "folder_separator_icon": "/",
+                        "home_icon": "~",
+                        "mapped_locations": {
+                            "/home/hrigved/.config/": "\ue615 .config",
+                            "/home/hrigved/.config/nvim/": "\uf36f nvim",
+                            "/home/hrigved/My Programs": "\ue65d Programs",
+                            "/home/hrigved/My Programs/learn-c/": "\ue61e learn-c",
+                            "/home/hrigved/My Programs/learn-rust/": "\ue68b learn-rust"
+                        },
+                        "max_depth": 2,
+                        "style": "agnoster_short"
+                    },
+                    "template": " \ue5fe {{ .Path }}{{ if not .Writable }}<red> \uf4f4 </>{{end}}",
+                    "foreground": "yellow",
+                    "type": "path",
+                    "style": "plain"
+                },
+                {
+                    "properties": {
+                        "branch_icon": "\uf126 ",
+                        "cache_duration": "none",
+                        "fetch_status": true,
+                        "status_formats": {
+                            "Added": " <green>+%d</>",
+                            "Deleted": " <red>-%d</>",
+                            "Modified": " <blue>~%d</>",
+                            "Untracked": " <red>?%d</>"
+                        }
+                    },
+                    "template": " <cyan>{{ .HEAD }}</>{{ if gt .Behind 0 }}<cyan> \uf175</>{{ end }}{{ if gt .Ahead 0 }}<cyan> \uf176</>{{ end }}{{ if (.Working.Changed) }}<red> \udb84\udf98{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}</>{{ end }}{{ if (.Staging.Changed) }}{{ if not (.Working.Changed) }}<green> \udb83\ude1e</>{{ end }} {{ .Staging.String }}{{ end }}",
+                    "type": "git",
+                    "style": "plain"
+                },
+                {
+                    "properties": {
+                        "cache_duration": "none"
+                    },
+                    "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ if eq .Type \"cargo\" }} {{ else if eq .Type \"node\" }} {{ else }} {{ end }}{{ .Name }}{{ end }} {{ if .Version }}v{{ .Version }}{{ end }}{{ end }}",
+                    "type": "project",
+                    "style": "plain",
+                    "foreground_templates": [
+                        "{{ if eq .Type \"cargo\" }}#CE412B{{ end }}",
+                        "{{ if eq .Type \"node\" }}#5FA04E{{ end }}"
+                    ]
+                }
+            ]
         },
         {
-          "style": "plain",
-          "template": " <cyan>{{ .HEAD }}</>{{ if gt .Behind 0 }}<cyan> </>{{ end }}{{ if gt .Ahead 0 }}<cyan> </>{{ end }}{{ if (.Working.Changed) }}<red> 󱎘{{ if gt .Working.Untracked 0 }} ?{{ .Working.Untracked }}{{ end }}</>{{ end }}{{ if (.Staging.Changed) }}{{ if not (.Working.Changed) }}<green> 󰸞</>{{ end }} {{ .Staging.String }}{{ end }}",
-          "type": "git",
-          "properties": {
-            "fetch_status": true,
-            "branch_icon": " ",
-            "status_formats": {
-              "Added": " <green>+%d</>",
-              "Modified": " <blue>~%d</>",
-              "Deleted": " <red>-%d</>",
-              "Untracked": " <red>?%d</>"
-            }
-          }
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [
+                {
+                    "properties": {
+                        "cache_duration": "none"
+                    },
+                    "template": "$ {{ if eq .Code 0 }}<lightGreen>❯</>{{ else }}<lightRed>❯</>{{ end }}",
+                    "foreground": "blue",
+                    "type": "text",
+                    "style": "plain"
+                }
+            ],
+            "newline": true
         },
         {
-          "type": "project",
-          "style": "plain",
-          "foreground_templates": [
-            "{{ if eq .Type \"cargo\" }}#CE412B{{ end }}",
-            "{{ if eq .Type \"cargo\" }}#CE412B{{ end }}"
-          ],
-          "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ if eq .Type \"cargo\" }} {{ else }} {{ end }}{{ .Name }}{{ end }} {{ if .Version }}v{{ .Version }}{{ end }}{{ end }}"
+            "type": "rprompt",
+            "alignment": "right",
+            "segments": [
+                {
+                    "properties": {
+                        "cache_duration": "none",
+                        "style": "round",
+                        "threshold": 500
+                    },
+                    "template": "<yellow>\uf250 {{ .FormattedMs }}</>",
+                    "foreground": "darkGray",
+                    "type": "executiontime",
+                    "style": "plain"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "type": "prompt",
-      "newline": true,
-      "alignment": "left",
-      "segments": [
-        {
-          "foreground": "blue",
-          "style": "plain",
-          "template": "$ {{ if eq .Code 0 }}<lightGreen>\u276f</>{{ else }}<lightRed>\u276f</>{{ end }}",
-          "type": "text"
-        }
-      ]
-    },
-    {
-      "type": "rprompt",
-      "alignment": "right",
-      "segments": [
-        {
-          "type": "executiontime",
-          "style": "plain",
-          "foreground": "darkGray",
-          "template": "<yellow> {{ .FormattedMs }}</>",
-          "properties": {
-            "style": "round",
-            "threshold": 500
-          }
-        }
-      ]
-    }
-  ],
-
-  "final_space": true,
-  "version": 2
+    ],
+    "version": 3,
+    "final_space": true
 }

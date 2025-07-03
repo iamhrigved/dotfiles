@@ -10,4 +10,11 @@ return {
 	require("main.plugins.ui.telescope"),
 	require("main.plugins.ui.illuminate"),
 	require("main.plugins.ui.colors"),
+
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	},
 }

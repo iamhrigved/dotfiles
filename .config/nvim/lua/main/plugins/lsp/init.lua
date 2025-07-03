@@ -56,11 +56,13 @@ return {
 	"hrsh7th/cmp-cmdline",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
 	"hrsh7th/cmp-emoji",
 	"uga-rosa/cmp-dictionary",
 	"onsails/lspkind.nvim",
 	"L3MON4D3/LuaSnip",
 	"windwp/nvim-autopairs",
+	"windwp/nvim-ts-autotag",
 
 	"mrcjkb/rustaceanvim",
 
@@ -70,8 +72,8 @@ return {
 
 	-- lsp dependencies
 	"SmiteshP/nvim-navic",
-	"williamboman/mason.nvim",
-	"williamboman/mason-lspconfig",
+	"mason-org/mason.nvim",
+	"mason-org/mason-lspconfig.nvim",
 	"antosha417/nvim-lsp-file-operations", -- see setup fn in neotree.lua
 	require("main.plugins.lsp.lint"),
 	require("main.plugins.lsp.formatter"),

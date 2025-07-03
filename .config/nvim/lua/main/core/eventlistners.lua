@@ -13,6 +13,18 @@ autocmd("TextYankPost", {
 	end,
 })
 
+autocmd("BufEnter", {
+	desc = "Change bufferline indicator color based on file icon color",
+	callback = function()
+		local file_type = vim.bo.filetype or ""
+		local _, color = require("nvim-web-devicons").get_icon_color_by_filetype(file_type)
+		if color ~= nil then
+			vim.cmd.hi("BufferLineIndicatorSelected guifg=" .. color)
+			vim.cmd.hi("BufferLineCloseButtonSelected guifg=" .. color)
+		end
+	end,
+})
+
 -- updating lazy plugins when loading
 -- autocmd("VimEnter", {
 -- pattern = "*",
@@ -28,14 +40,13 @@ autocmd("TextYankPost", {
 -- 		vim.cmd.cd(vim.fn.expand("%:p:h"))
 -- 	end,
 -- })
---
--- NOTE: the iconhl function is re-written in the ~/.local/share/nvim/lazy/bufferline.nvim/lua/bufferline/config.lua file
 
 autocmd({ "FocusLost", "WinLeave" }, {
 	callback = function()
 		vim.o.cursorline = false
 	end,
 })
+
 autocmd({ "FocusGained", "WinEnter" }, {
 	callback = function()
 		if vim.bo.filetype == nil then

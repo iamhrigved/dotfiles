@@ -2,10 +2,10 @@ vim.g.mapleader = " "
 
 local default_opts = { noremap = true }
 local noremap = function(mode, key, action, opts)
-    if opts == {} then
-        opts = default_opts
-    end
-    vim.keymap.set(mode, key, action, opts)
+	if opts == {} then
+		opts = default_opts
+	end
+	vim.keymap.set(mode, key, action, opts)
 end
 
 -- NOTE: All keybindings are changed for the Colemak-DH layout!
@@ -38,6 +38,9 @@ noremap("n", "<C-n>", "<C-w>j")
 noremap("n", "<C-e>", "<C-w>k")
 noremap("n", "<C-i>", "<C-w>l")
 
+-- tags
+noremap("n", "<C-l>", "<C-i>")
+
 -- noremap("n", "<C-d>", "<C-d>zz")
 -- noremap("n", "<C-u>", "<C-u>zz")
 
@@ -51,7 +54,7 @@ noremap("v", "N", ":m '>+1<CR>gv=gv")
 
 -- preserve the text pasted in visual mode
 noremap("v", "p", '"_dP') -- delete into the null register and paste
-noremap("v", "D", '"_d')  -- just delete into the null register in visual mode
+noremap("v", "D", '"_d') -- just delete into the null register in visual mode
 noremap({ "v", "n" }, "<C-c>", '"+y')
 -- to paste, just do C-S-v
 
@@ -65,7 +68,6 @@ noremap("n", "<C-right>", "<C-w>5>")
 -- noremap("n", "n", "nzz")
 -- noremap("n", "N", "Nzz")
 noremap("n", "<leader>hx", "<cmd>noh<CR>") -- clear highlights
-noremap("i", "<Tab>", "    ")              -- add 4 spaces when tab is pressed
 
 -- split keybindings
 noremap("n", "<leader>sh", "<cmd>split<CR>")
@@ -73,16 +75,16 @@ noremap("n", "<leader>sv", "<cmd>vsplit<CR>")
 noremap("n", "<leader>x", vim.cmd.BufDel)
 noremap("n", "<leader>X", vim.cmd.BufDelOthers)
 noremap("n", "<leader>sx", function()
-    if #vim.api.nvim_list_wins() <= 1 then
-        return
-    end
-    local bufnr = vim.api.nvim_get_current_buf()
-    local modifiable = vim.api.nvim_buf_get_option(bufnr, "modifiable")
-    if modifiable then
-        vim.cmd("silent w | bd!")
-    else
-        vim.cmd("bd!")
-    end
+	if #vim.api.nvim_list_wins() <= 1 then
+		return
+	end
+	local bufnr = vim.api.nvim_get_current_buf()
+	local modifiable = vim.api.nvim_buf_get_option(bufnr, "modifiable")
+	if modifiable then
+		vim.cmd("silent w | bd!")
+	else
+		vim.cmd("bd!")
+	end
 end)
 
 -- terminal keymaps

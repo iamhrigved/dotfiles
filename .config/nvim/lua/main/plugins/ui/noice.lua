@@ -24,8 +24,8 @@ return {
 			},
 			popupmenu = {
 				enabled = false,
-				backend = "nui", 
-				kind_icons = {}, 
+				backend = "nui",
+				kind_icons = {},
 			},
 			redirect = {
 				view = "popup",
@@ -100,9 +100,9 @@ return {
 					view = "mini",
 				},
 				override = {
-					["vim.lsp.util.convert_input_to_markdown_lines"] = false,
-					["vim.lsp.util.stylize_markdown"] = false,
-					["cmp.entry.get_documentation"] = false,
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true,
 				},
 				hover = {
 					enabled = true,
@@ -114,7 +114,7 @@ return {
 					enabled = true,
 					auto_open = {
 						enabled = true,
-						trigger = true, 
+						trigger = true,
 						luasnip = true,
 						throttle = 50,
 					},
@@ -124,7 +124,13 @@ return {
 				message = {
 					enabled = true,
 					view = "notify",
-					opts = {},
+					opts = {
+						position = { row = 2, col = 2 },
+						size = {
+							max_width = math.floor(0.8 * vim.api.nvim_win_get_width(0)),
+							max_height = 15,
+						},
+					},
 				},
 				documentation = {
 					view = "hover",
@@ -211,15 +217,6 @@ return {
 				{
 					filter = {
 						event = "msg_show",
-						find = "Some options have changed, please run `:Neotree migrations` to see the changes",
-					},
-					opts = {
-						skip = true,
-					},
-				},
-				{
-					filter = {
-						event = "msg_show",
 						any = {
 							min_width = 20,
 							min_height = 2,
@@ -235,11 +232,13 @@ return {
 					{ "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
 					{ "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
 				},
-			}, 
+			},
 		})
 
 		require("notify").setup({
 			background_colour = "#000000",
+			render = "wrapped-compact",
+			timeout = 5000,
 		})
 
 		vim.keymap.set("n", "<leader>no", "<cmd>Noice<CR>")
@@ -247,5 +246,5 @@ return {
 		vim.keymap.set("n", "<leader>nq", function()
 			require("notify").dismiss({ silent = true, pending = true })
 		end)
-	end
+	end,
 }

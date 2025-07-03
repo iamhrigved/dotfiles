@@ -8,23 +8,23 @@ return {
 				mode = "buffers", -- set to "tabs" to only show tabpages instead
 				themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
 				numbers = function(opts)
-					return string.format("%s", opts.raise(opts.ordinal))
+					-- return string.format("%s", opts.raise(opts.ordinal))
 				end,
 				close_command = "bdelete! %d", -- can be a string | function, | false see "Mouse actions"
 				right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
 				left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
 				middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
 				indicator = {
-					icon = "▎", -- ▎this should be omitted if indicator style is not 'icon'
-					style = "underline",
+					icon = "", --▍▐ this should be omitted if indicator style is not 'icon'
+					style = "icon",
 				},
-				buffer_close_icon = "",
+				buffer_close_icon = "", -- 
 				modified_icon = "●",
-				close_icon = "",
+				close_icon = "", --
 				hover = {
-					enabled = false,
+					enabled = true,
 					delay = 1,
-					reveal = { "close" },
+					reveal = { "close" }, -- { "close" },
 				},
 				left_trunc_marker = "",
 				right_trunc_marker = "",
@@ -34,7 +34,7 @@ return {
 				max_name_length = 15,
 				max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
 				truncate_names = true, -- whether or not tab names should be truncated
-				tab_size = 18,
+				tab_size = 16,
 				diagnostics = "nvim_lsp",
 				offsets = {
 					{
@@ -67,7 +67,7 @@ return {
 					},
 				},
 				color_icons = true,
-				separator_style = { "", "" },
+				separator_style = { "  ", "  " },
 				custom_areas = {
 					right = function()
 						local result = {}

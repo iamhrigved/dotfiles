@@ -30,8 +30,10 @@ return {
 						return {
 							[";"] = "next", -- set to `right` to always go right
 							[","] = "prev", -- set to `left` to always go left
-							[motion:lower()] = "next",
-							[motion:upper()] = "prev",
+
+							-- pressing f takes you forward which is bad
+							-- [motion:lower()] = "next",
+							-- [motion:upper()] = "prev",
 						}
 					end,
 					search = { wrap = false },

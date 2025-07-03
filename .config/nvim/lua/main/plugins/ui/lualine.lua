@@ -15,13 +15,14 @@ return {
 
 		local lsp_name = function()
 			local lsps = vim.lsp.get_clients({ bufnr = 0 })
-			local names = "  LSP ~ "
+			local names = "  LSP ~"
 
 			for _, lsp in pairs(lsps) do
-				names = names .. lsp.name
+				names = names .. " " .. lsp.name
 			end
 
 			local formatters = require("conform").list_formatters(0)
+
 			for _, formatter in ipairs(formatters) do
 				names = names .. " " .. formatter.name
 			end

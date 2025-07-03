@@ -12,12 +12,20 @@ return {
 				-- Conform will run multiple formatters sequentially
 				python = { "isort", "black" },
 				-- Use a sub-list to run only the first available formatter
-				javascript = { "prettierd", "prettier" },
-				json = { "prettier", "prettierd" },
-				jsonc = { "prettier", "prettierd" },
+				javascript = { "prettier" },
+				json = { "prettier" },
+				javascriptreact = { "prettier" },
+
+				jsonc = { "prettier" },
 				markdown = { "prettier" },
 				rust = { "rustfmt" },
 				haskell = { "fourmolu" },
+			},
+
+			formatters = {
+				prettier = {
+					prepend_args = { "--tab-width", "4" },
+				},
 			},
 		})
 	end,

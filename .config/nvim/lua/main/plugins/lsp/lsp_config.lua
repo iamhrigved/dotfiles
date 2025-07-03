@@ -71,9 +71,6 @@ return {
 				border = "rounded",
 				focusable = true,
 			},
-			virtual_lines = {
-				current_line = true,
-			},
 			virtual_text = {
 				spacing = 4,
 				virt_text_pos = "eol",
@@ -92,6 +89,7 @@ return {
 		local default_on_attach = function(client, bufnr)
 			print("Welcome to " .. vim.bo.filetype .. " programing!")
 			vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+
 			if client.server_capabilities.documentSymbolProvider then
 				require("nvim-navic").attach(client, bufnr)
 			end
@@ -109,11 +107,14 @@ return {
 			require("lspconfig")[server].setup(default_opts)
 		end
 
-		-- configuring all lsp installed via mason
-		require("mason-lspconfig").setup_handlers({
-			function(server_name)
-				return setup(server_name, {})
-			end,
+		require("mason-lspconfig").setup({
+			-- configuring all lsp installed via mason
+			handlers = {
+				function(server_name)
+					print("arstarstarst: " .. server_name)
+					setup(server_name, {})
+				end,
+			},
 		})
 
 		-- for Rust:

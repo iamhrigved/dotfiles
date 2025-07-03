@@ -12,12 +12,12 @@ return {
 				local parsed_snippet = vim.lsp.util.parse_snippet(snippet_value)
 				local snippet_preview = str.oneline(str.oneline(parsed_snippet))
 				vim_item.abbr = snippet_preview
-			elseif #vim_item.abbr > 20 then
-				vim_item.abbr = string.sub(vim_item.abbr, 1, 30) .. "..."
+			elseif #vim_item.abbr > 25 then
+				vim_item.abbr = string.sub(vim_item.abbr, 1, 40) .. "..."
 			end
 			if vim_item.menu ~= nil then
-				if #vim_item.menu > 12 then
-					vim_item.menu = string.sub(vim_item.menu, 1, 12) .. "..."
+				if #vim_item.menu > 15 then
+					vim_item.menu = string.sub(vim_item.menu, 1, 18) .. "..."
 				end
 			end
 			return vim_item
@@ -25,7 +25,7 @@ return {
 
 		local lspKindFormat = lspkind.cmp_format({
 			mode = "symbol_text",
-			maxwidth = 20,
+			maxwidth = 25,
 			ellipsis_char = "...",
 			show_labelDetails = false,
 			before = CmpBefore,
@@ -37,7 +37,8 @@ return {
 			sources = {
 				{ name = "nvim_lsp", group_index = 1 },
 				{ name = "buffer", group_index = 2 },
-				{ name = "emoji", group_index = 3 },
+				{ name = "path", group_index = 3 },
+				{ name = "emoji", group_index = 4 },
 			},
 
 			window = {
@@ -57,9 +58,9 @@ return {
 					border = "rounded",
 				},
 			},
-			-- performance = {
-			-- 	max_view_entries = 20,
-			-- },
+			performance = {
+				max_view_entries = 40,
+			},
 			preselect = "item",
 			completion = {
 				completeopt = "menu,menuone,preview,noinsert",
@@ -76,7 +77,7 @@ return {
 			},
 
 			mapping = cmp.mapping.preset.insert({
-				["<C-y>"] = cmp.mapping.confirm({ select = true }),
+				["<Tab>"] = cmp.mapping.confirm({ select = true }),
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-c>"] = cmp.mapping.abort(),
 				["<C-e>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -116,7 +117,7 @@ return {
 		-- `:` cmdline setup.
 		cmp.setup.cmdline(":", {
 			mapping = cmp.mapping.preset.cmdline({
-				["<C-y>"] = { c = cmp.mapping.confirm({ select = true }) },
+				["<Tab>"] = { c = cmp.mapping.confirm({ select = true }) },
 				["<C-Space>"] = { c = cmp.mapping.complete() },
 				["<C-e>"] = { c = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) },
 				["<C-n>"] = { c = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }) },
@@ -134,7 +135,7 @@ return {
 			}),
 			window = {
 				completion = {
-					scrollbar = false,
+					scrollbar = true,
 				},
 			},
 		})
@@ -144,12 +145,18 @@ return {
 			local ls = require("luasnip")
 			if ls.jumpable() then
 				ls.jump(1)
+			else
+				-- see: https://www.reddit.com/r/neovim/comments/zrcrv1/luasnip_tab_as_expandjump_trigger/
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
 			end
 		end)
 		vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
 			local ls = require("luasnip")
 			if ls.jumpable(-1) then
 				ls.jump(-1)
+			else
+				-- see: https://www.reddit.com/r/neovim/comments/zrcrv1/luasnip_tab_as_expandjump_trigger/
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", false)
 			end
 		end)
 

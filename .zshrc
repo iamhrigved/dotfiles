@@ -47,6 +47,10 @@ alias exsh="exec zsh"
 
 alias p="pacman"
 alias pS="paru -S"
+alias pR="sudo paru -R"
+alias pQt="paru -Qt"
+alias pQi="paru -Qi"
+alias pQs="paru -Qs"
 alias pSs="paru -Ss"
 
 alias tm="tmux"

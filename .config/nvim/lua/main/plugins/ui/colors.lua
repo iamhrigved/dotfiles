@@ -62,9 +62,6 @@ return {
 			vim.cmd("hi! link Directory DefaultOrange")
 
 			-- vim.cmd("hi! Visual guibg=#0a3960") -- #1b3159
-			-- vim.cmd("hi! IlluminatedWordText guibg=#323641 gui=none")
-			-- vim.cmd("hi! IlluminatedWordRead guibg=#323641 gui=none")
-			-- vim.cmd("hi! IlluminatedWordWrite guibg=#323641 gui=none")
 
 			-- vim.cmd("hi! PmenuSel guibg=#0a3960 guifg=NONE gui=NONE cterm=NONE")
 
@@ -150,14 +147,17 @@ return {
 					hl.String = { fg = color.green, italic = true }
 
 					hl.TabLineSel = { fg = color.black, bg = color.blue }
+					hl.TabLine = { fg = color.black, bg = color.blue }
 
 					hl.FlashLabel = { bg = color.red1, fg = color.black }
 
 					hl.MiniIndentscopeSymbol = { fg = darken(color.blue, 0.7), nocombine = true }
+
+					hl.BufferLineCloseButton = { fg = "none", bg = "none" }
 				end,
 			})
 
-			vim.cmd.colorscheme("tokyonight-storm")
+			-- vim.cmd.colorscheme("tokyonight-storm")
 		end,
 	},
 	{
@@ -165,10 +165,24 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-			-- Optionally configure and load the colorscheme
-			-- directly inside the plugin declaration.
+			vim.g.gruvbox_material_foreground = "material"
 			vim.g.gruvbox_material_enable_italic = true
 			vim.g.gruvbox_material_transparent_background = 2
+			vim.g.gruvbox_material_diagnostic_text_highlight = 0
+			vim.g.gruvbox_material_diagnostic_virtual_text = "colored"
+			vim.g.gruvbox_material_current_word = "grey background"
+			vim.g.gruvbox_material_inlay_hints_background = "dimmed"
+
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				desc = "Applying custom highlights on gruvbox colorscheme",
+				pattern = "gruvbox-material",
+				callback = function()
+					vim.cmd("hi! NormalFloat guibg=NONE")
+					vim.cmd("hi! FloatBorder guibg=NONE")
+				end,
+			})
+
+			vim.cmd.colorscheme("gruvbox-material")
 		end,
 	},
 	{
