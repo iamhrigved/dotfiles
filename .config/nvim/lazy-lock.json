@@ -53,6 +53,7 @@
   "rainbow-delimiters.nvim": { "branch": "master", "commit": "55ad4fb76ab68460f700599b7449385f0c4e858e" },
   "rustaceanvim": { "branch": "master", "commit": "140d1c28db23e88bec674336a3291a80faf16b01" },
   "statuscol.nvim": { "branch": "main", "commit": "c46172d0911aa5d49ba5f39f4351d1bb7aa289cc" },
+  "telescope-frecency.nvim": { "branch": "master", "commit": "03a0efd1a8668b902bddef4b82cb7d46cd5ab22c" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "1f08ed60cafc8f6168b72b80be2b2ea149813e55" },
   "telescope-ui-select.nvim": { "branch": "master", "commit": "6e51d7da30bd139a6950adf2a47fda6df9fa06d2" },
   "telescope-zoxide": { "branch": "main", "commit": "54bfe630bad08dc9891ec78c7cf8db38dd725c97" },

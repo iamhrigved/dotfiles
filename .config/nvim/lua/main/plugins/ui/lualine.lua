@@ -18,6 +18,9 @@ return {
 			local names = "  LSP ~"
 
 			for _, lsp in pairs(lsps) do
+				if lsp.name == "emmet_language_server" then
+					lsp.name = "emmet"
+				end
 				names = names .. " " .. lsp.name
 			end
 

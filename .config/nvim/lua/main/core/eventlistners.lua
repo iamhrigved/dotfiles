@@ -16,8 +16,9 @@ autocmd("TextYankPost", {
 autocmd("BufEnter", {
 	desc = "Change bufferline indicator color based on file icon color",
 	callback = function()
-		local file_type = vim.bo.filetype or ""
-		local _, color = require("nvim-web-devicons").get_icon_color_by_filetype(file_type)
+		local file_name = vim.fn.expand("%:t")
+		local file_type = vim.fn.expand("%:e") -- extension
+		local _, color = require("nvim-web-devicons").get_icon_color(file_name, file_type)
 		if color ~= nil then
 			vim.cmd.hi("BufferLineIndicatorSelected guifg=" .. color)
 			vim.cmd.hi("BufferLineCloseButtonSelected guifg=" .. color)

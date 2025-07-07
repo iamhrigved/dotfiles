@@ -192,15 +192,15 @@ return {
 		vim.keymap.set("n", "<leader>ts", "<cmd>Trouble symbols<CR>")
 
 		-- automatically open trouble quickfix list when anything is added to the list
-		vim.api.nvim_create_autocmd("BufRead", {
-			callback = function(ev)
-				if vim.bo[ev.buf].buftype == "quickfix" then
-					vim.schedule(function()
-						vim.cmd([[cclose]])
-						vim.cmd([[Trouble qflist open win.position=bottom]])
-					end)
-				end
-			end,
-		})
+		-- vim.api.nvim_create_autocmd("BufRead", {
+		-- 	callback = function(ev)
+		-- 		if vim.bo[ev.buf].buftype == "quickfix" then
+		-- 			vim.schedule(function()
+		-- 				vim.cmd([[cclose]])
+		-- 				vim.cmd([[Trouble qflist open win.position=bottom]])
+		-- 			end)
+		-- 		end
+		-- 	end,
+		-- })
 	end,
 }

@@ -116,6 +116,10 @@ return {
 		require("telescope").load_extension("persisted")
 		require("telescope").load_extension("zoxide")
 		require("telescope").load_extension("fzf")
+		require("telescope").load_extension("frecency")
 		vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list)
+		vim.keymap.set("n", "<leader>tf", function()
+			require("telescope").extensions.frecency.frecency({ workspace = "CWD" })
+		end)
 	end,
 }
